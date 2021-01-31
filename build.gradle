@@ -1,12 +1,30 @@
-plugins {
-    id 'java'
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.4'
+    }
 }
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'java'
 
 group 'ga.matthewtgm.json'
 version '0.1'
 
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 
-dependencies {}
+dependencies {
+    compile('com.google.code.gson:gson:2.8.6')
+}
+
+shadowJar {
+    dependencies {
+        include(dependency('com.google.code.gson:gson:2.8.6'))
+    }
+
+    exclude('dummyThing')
+}

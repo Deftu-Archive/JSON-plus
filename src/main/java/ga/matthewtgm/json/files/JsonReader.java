@@ -1,6 +1,5 @@
 package ga.matthewtgm.json.files;
 
-import ga.matthewtgm.json.exceptions.JsonParsingException;
 import ga.matthewtgm.json.objects.JsonObject;
 import ga.matthewtgm.json.parsing.JsonParser;
 
@@ -10,7 +9,7 @@ import java.io.FileReader;
 
 public class JsonReader {
 
-    public static JsonObject read(String name, File directory) throws JsonParsingException {
+    public static JsonObject read(String name, File directory) {
         try {
             if (!directory.exists()) {
                 directory.mkdirs();
@@ -20,7 +19,7 @@ public class JsonReader {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             StringBuilder builder = new StringBuilder();
             reader.lines().forEach(builder::append);
-            return (JsonObject) JsonParser.parse(builder.toString());
+            return JsonParser.parse(builder.toString());
         } catch (Exception e) {
             e.printStackTrace();
             return null;
