@@ -1,25 +1,58 @@
 package ga.matthewtgm.json.objects;
 
 import ga.matthewtgm.json.base.Json;
+import ga.matthewtgm.json.util.Utils;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-public class JsonArray extends HashMap implements Json {
+public class JsonArray extends ArrayList implements Json {
+
+    public String toJson(List list) {
+        if(list == null)
+            return "null";
+
+        boolean first = true;
+        StringBuffer sb = new StringBuffer();
+        Iterator iter=list.iterator();
+
+        sb.append('[');
+        while(iter.hasNext()){
+            if(first)
+                first = false;
+            else
+                sb.append(',');
+
+            Object value=iter.next();
+            if(value == null){
+                sb.append("null");
+                continue;
+            }
+            sb.append(Utils.toJsonString(value));
+        }
+        sb.append(']');
+        return sb.toString();
+    }
 
     @Override
     public String toJson() {
-        return null;
+        return this.toJson(this);
+    }
+
+    @Override
+    public String toString() {
+        return this.toJson();
     }
 
     /**
-     * Adds a variable to the JSON array
+     * Adds a variable to the JSON array.
      *
-     * @param key the name of the variable
-     * @param value the value you're adding to this array
-     * @return the object itself - QOL
+     * @param key the name of the variable.
+     * @return the object itself - QOL.
      */
-    public JsonArray add(Object key, Object value) {
-        super.put(key, value);
+    public JsonArray plus(Object key) {
+        super.add(key);
         return this;
     }
 

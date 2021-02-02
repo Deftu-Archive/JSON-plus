@@ -1,5 +1,7 @@
 package ga.matthewtgm.json.files;
 
+import ga.matthewtgm.json.base.Json;
+import ga.matthewtgm.json.objects.JsonArray;
 import ga.matthewtgm.json.objects.JsonObject;
 import ga.matthewtgm.json.parsing.JsonParser;
 
@@ -9,7 +11,7 @@ import java.io.FileReader;
 
 public class JsonReader {
 
-    public static JsonObject read(String name, File directory) {
+    public static Json read(String name, File directory) {
         try {
             if (!directory.exists()) {
                 directory.mkdirs();
