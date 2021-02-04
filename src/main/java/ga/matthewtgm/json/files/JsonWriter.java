@@ -1,5 +1,7 @@
 package ga.matthewtgm.json.files;
 
+import ga.matthewtgm.json.base.Json;
+import ga.matthewtgm.json.objects.JsonArray;
 import ga.matthewtgm.json.objects.JsonObject;
 
 import java.io.BufferedWriter;
@@ -15,7 +17,7 @@ public class JsonWriter {
      * @param object    the object being written
      * @param directory the directory to write to
      */
-    public static void write(String fileName, JsonObject object, File directory) {
+    public static void writeObj(String fileName, JsonObject object, File directory) {
         BufferedWriter writer = null;
         try {
             if (!directory.exists()) {
@@ -25,7 +27,77 @@ public class JsonWriter {
             File file = new File(directory, fileName + ".json");
             if (!file.exists()) file.createNewFile();
             writer = new BufferedWriter(new FileWriter(file));
-            writer.write(object.toString());
+            writer.write(object.toJson());
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                writer.flush();
+                writer.close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        } finally {
+            try {
+                writer.flush();
+                writer.close();
+            } catch (IOException e3) {
+                e3.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Writes a file with the object specified as its contents
+     *
+     * @param array     the object being written
+     * @param directory the directory to write to
+     */
+    public static void writeArr(String fileName, JsonArray array, File directory) {
+        BufferedWriter writer = null;
+        try {
+            if (!directory.exists()) {
+                directory.mkdirs();
+                Thread.sleep(1000);
+            }
+            File file = new File(directory, fileName + ".json");
+            if (!file.exists()) file.createNewFile();
+            writer = new BufferedWriter(new FileWriter(file));
+            writer.write(array.toJson());
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                writer.flush();
+                writer.close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        } finally {
+            try {
+                writer.flush();
+                writer.close();
+            } catch (IOException e3) {
+                e3.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Writes a file with the object specified as its contents
+     *
+     * @param json      the object being written
+     * @param directory the directory to write to
+     */
+    public static void write(String fileName, Json json, File directory) {
+        BufferedWriter writer = null;
+        try {
+            if (!directory.exists()) {
+                directory.mkdirs();
+                Thread.sleep(1000);
+            }
+            File file = new File(directory, fileName + ".json");
+            if (!file.exists()) file.createNewFile();
+            writer = new BufferedWriter(new FileWriter(file));
+            writer.write(json.toJson());
         } catch (Exception e) {
             e.printStackTrace();
             try {
