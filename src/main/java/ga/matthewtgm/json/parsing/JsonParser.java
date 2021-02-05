@@ -17,13 +17,13 @@ public class JsonParser {
         return gson.fromJson(s, JsonArray.class);
     }
 
-    public static Json parse(String s, Json type) {
+    public static Json parse(String s, Class<?> jsonClazz) {
         Gson gson = new Gson();
-        if(type instanceof JsonObject) {
+        if(jsonClazz.isAssignableFrom(JsonObject.class)) {
             return gson.fromJson(s, JsonObject.class);
         }
 
-        if(type instanceof JsonArray) {
+        if(jsonClazz.isAssignableFrom(JsonArray.class)) {
             return gson.fromJson(s, JsonArray.class);
         }
 
