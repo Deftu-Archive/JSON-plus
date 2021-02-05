@@ -45,7 +45,7 @@ public class JsonReader {
         }
     }
 
-    public static Json read(String name, File directory, Json type) {
+    public static Json read(String name, File directory, Class<?> jsonClazz) {
         try {
             if (!directory.exists()) {
                 directory.mkdirs();
@@ -55,7 +55,7 @@ public class JsonReader {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             StringBuilder builder = new StringBuilder();
             reader.lines().forEach(builder::append);
-            return JsonParser.parse(builder.toString(), type);
+            return JsonParser.parse(builder.toString(), jsonClazz);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
