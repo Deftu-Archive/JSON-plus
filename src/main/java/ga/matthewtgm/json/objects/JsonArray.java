@@ -7,25 +7,25 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class JsonArray extends ArrayList implements Json {
+public class JsonArray extends ArrayList<Object> implements Json {
 
-    public String toJson(List list) {
-        if(list == null)
+    public String toJson(List<Object> list) {
+        if (list == null)
             return "null";
 
         boolean first = true;
         StringBuffer sb = new StringBuffer();
-        Iterator iter=list.iterator();
+        Iterator<Object> iter = list.iterator();
 
         sb.append('[');
-        while(iter.hasNext()){
-            if(first)
+        while (iter.hasNext()) {
+            if (first)
                 first = false;
             else
                 sb.append(',');
 
-            Object value=iter.next();
-            if(value == null){
+            Object value = iter.next();
+            if (value == null) {
                 sb.append("null");
                 continue;
             }

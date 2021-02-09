@@ -7,13 +7,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class JsonObject extends HashMap implements Json {
+public class JsonObject extends HashMap<String, Object> implements Json {
 
     /**
      * the map to get the json from.
+     *
      * @return the current object in a proper JSON format
      */
-    public String toJson(Map map) {
+    public String toJson(Map<?, ?> map) {
         if (map == null)
             return "null";
 
@@ -28,7 +29,7 @@ public class JsonObject extends HashMap implements Json {
             else
                 sb.append(',');
 
-            Map.Entry entry = (Map.Entry) iter.next();
+            Map.Entry<?, ?> entry = (Map.Entry<?, ?>) iter.next();
             toJson(String.valueOf(entry.getKey()), entry.getValue(), sb);
         }
         sb.append('}');
@@ -36,14 +37,14 @@ public class JsonObject extends HashMap implements Json {
     }
 
     /**
-     * @param k key.
-     * @param v value.
+     * @param k  key.
+     * @param v  value.
      * @param sb the string builder to append to.
      * @return the current object in a proper JSON format
      */
     public String toJson(String k, Object v, StringBuffer sb) {
         sb.append('\"');
-        if(k == null)
+        if (k == null)
             sb.append("null");
         else
             Utils.escape(k, sb);
@@ -71,9 +72,21 @@ public class JsonObject extends HashMap implements Json {
      * @param value the value you're adding to this object
      * @return the object itself - QOL
      */
-    public JsonObject add(Object key, Object value) {
+    public JsonObject add(String key, Object value) {
         super.put(key, value);
         return this;
+    }
+
+    /**
+     * Returns an inner-JsonObject
+     *
+     * @param key the name of the object
+     * @return {@code this}
+     */
+    public JsonObject get(String key) {
+        if(!(super.get(key) instanceof JsonObject)) throw new IllegalStateException("Expected JsonObject.");
+        if(super.get(key) == null) throw new NullPointerException("Object cannot be null.");
+        return (JsonObject) super.get(key);
     }
 
 }
