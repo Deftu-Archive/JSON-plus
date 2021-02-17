@@ -81,11 +81,11 @@ public class JsonObject extends HashMap<String, Object> implements Json {
      * Returns an inner-JsonObject
      *
      * @param key the name of the object
-     * @return {@code this}
+     * @return {@code the inner-object}
      */
-    public JsonObject get(String key) {
-        if(!(super.get(key) instanceof JsonObject)) throw new IllegalStateException("Expected JsonObject.");
-        if(super.get(key) == null) throw new NullPointerException("Object cannot be null.");
+    public JsonObject getInnerObject(String key) {
+        if(!(super.get(key) instanceof JsonObject)) new IllegalStateException("Expected JsonObject").printStackTrace();
+        if(super.get(key) == null) throw new NullPointerException();
         return (JsonObject) super.get(key);
     }
 
