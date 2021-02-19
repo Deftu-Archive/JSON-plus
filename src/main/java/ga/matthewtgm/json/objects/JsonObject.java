@@ -77,6 +77,24 @@ public class JsonObject extends HashMap<String, Object> implements Json {
         return this;
     }
 
+    public <T> T get(String key, Class<?> type) {
+        if (!this.containsKey(key)) {
+            Object newVal = new Object();
+            if (type.isAssignableFrom(Boolean.class)) newVal = Boolean.FALSE;
+            if (type.isAssignableFrom(Double.class)) newVal = 0D;
+            if (type.isAssignableFrom(Float.class)) newVal = 0F;
+            if (type.isAssignableFrom(Long.class)) newVal = 0L;
+            if (type.isAssignableFrom(Integer.class)) newVal = 0;
+            if (type.isAssignableFrom(Short.class)) newVal = 0;
+            if (type.isAssignableFrom(Character.class)) newVal = 'A';
+            if (type.isAssignableFrom(Byte.class)) newVal = 0;
+            if (type.isAssignableFrom(JsonObject.class)) newVal = new JsonObject();
+            if (type.isAssignableFrom(JsonArray.class)) newVal = new JsonArray();
+            this.put(key, newVal);
+        }
+        return (T) this.get(key);
+    }
+
     /**
      * Returns an inner-JsonObject
      *
