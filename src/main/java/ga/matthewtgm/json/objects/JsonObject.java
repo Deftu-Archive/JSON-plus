@@ -95,16 +95,35 @@ public class JsonObject extends HashMap<String, Object> implements Json {
         return (T) this.get(key);
     }
 
-    /**
-     * Returns an inner-JsonObject
-     *
-     * @param key the name of the object
-     * @return {@code the inner-object}
-     */
-    public JsonObject getInnerObject(String key) {
-        if(!(super.get(key) instanceof JsonObject)) new IllegalStateException("Expected JsonObject").printStackTrace();
-        if(super.get(key) == null) throw new NullPointerException();
-        return (JsonObject) super.get(key);
+    public short getAsShort(String key) {
+        return (short) get(key);
+    }
+    public int getValueAsInt(String key) {
+        return (int) get(key);
+    }
+    public byte getValueAsByte(String key) {
+        return (byte) get(key);
+    }
+    public float getValueAsFloat(String key) {
+        return (float) get(key);
+    }
+    public double getValueAsDouble(String key) {
+        return (double) get(key);
+    }
+    public char getValueAsChar(String key) {
+        return (char) get(key);
+    }
+    public boolean getValueAsBoolean(String key) {
+        return (boolean) get(key);
+    }
+    public String getValueAsString(String key) {
+        return (String) get(key);
+    }
+    public JsonObject getValueAsJsonObject(String key) {
+        return (JsonObject) get(key);
+    }
+    public JsonArray getValueAsJsonArray(String key) {
+        return (JsonArray) get(key);
     }
 
 }
