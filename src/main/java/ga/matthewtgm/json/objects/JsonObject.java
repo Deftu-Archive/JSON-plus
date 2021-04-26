@@ -6,8 +6,9 @@ import ga.matthewtgm.json.util.Utils;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
 
-public class JsonObject extends HashMap<String, Object> implements Json {
+public class JsonObject extends HashMap<String, Object> implements Json, ConcurrentMap<String, Object> {
 
     /**
      * the map to get the json from.
@@ -95,7 +96,7 @@ public class JsonObject extends HashMap<String, Object> implements Json {
         return (T) this.get(key);
     }
 
-    public short getAsShort(String key) {
+    public short getValueAsShort(String key) {
         return (short) get(key);
     }
     public int getValueAsInt(String key) {
