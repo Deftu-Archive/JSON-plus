@@ -6,8 +6,9 @@ import ga.matthewtgm.json.util.Utils;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-public class JsonArray extends ArrayList<Object> implements Json {
+public class JsonArray extends CopyOnWriteArrayList<Object> implements Json {
 
     public String toJson(List<Object> list) {
         if (list == null)
