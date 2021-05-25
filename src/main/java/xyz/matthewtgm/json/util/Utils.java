@@ -1,6 +1,6 @@
-package ga.matthewtgm.json.util;
+package xyz.matthewtgm.json.util;
 
-import ga.matthewtgm.json.base.Json;
+import xyz.matthewtgm.json.base.Json;
 
 import java.util.Iterator;
 import java.util.List;

@@ -1,8 +1,8 @@
-package ga.matthewtgm.json.files;
+package xyz.matthewtgm.json.files;
 
-import ga.matthewtgm.json.base.Json;
-import ga.matthewtgm.json.objects.JsonArray;
-import ga.matthewtgm.json.objects.JsonObject;
+import xyz.matthewtgm.json.base.Json;
+import xyz.matthewtgm.json.objects.JsonArray;
+import xyz.matthewtgm.json.objects.JsonObject;
 
 import java.io.BufferedWriter;
 import java.io.File;

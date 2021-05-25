@@ -9,12 +9,15 @@ buildscript {
 apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'java'
 
-group 'ga.matthewtgm.json'
-version '0.2.7'
+group 'xyz.matthewtgm.json'
+version '1.0'
 
 repositories {
     mavenCentral()
-    maven { url 'https://jitpack.io' }
+    maven {
+        name = "JitPack"
+        url = "https://jitpack.io"
+    }
 }
 
 dependencies {

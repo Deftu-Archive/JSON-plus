@@ -1,9 +1,8 @@
-package ga.matthewtgm.json.objects;
+package xyz.matthewtgm.json.objects;
 
-import ga.matthewtgm.json.base.Json;
-import ga.matthewtgm.json.util.Utils;
+import xyz.matthewtgm.json.base.Json;
+import xyz.matthewtgm.json.util.Utils;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;

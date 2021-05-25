@@ -1,7 +1,7 @@
-package ga.matthewtgm.json.objects;
+package xyz.matthewtgm.json.objects;
 
-import ga.matthewtgm.json.base.Json;
-import ga.matthewtgm.json.util.Utils;
+import xyz.matthewtgm.json.base.Json;
+import xyz.matthewtgm.json.util.Utils;
 
 import java.util.HashMap;
 import java.util.Iterator;

@@ -1,4 +1,4 @@
-package ga.matthewtgm.json.base;
+package xyz.matthewtgm.json.base;
 
 public interface Json {
     /**

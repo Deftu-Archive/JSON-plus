@@ -1,20 +1,20 @@
-package ga.matthewtgm.json.parsing;
+package xyz.matthewtgm.json.parsing;
 
 import com.google.gson.Gson;
-import ga.matthewtgm.json.base.Json;
-import ga.matthewtgm.json.objects.JsonArray;
-import ga.matthewtgm.json.objects.JsonObject;
+import xyz.matthewtgm.json.base.Json;
+import xyz.matthewtgm.json.objects.JsonArray;
+import xyz.matthewtgm.json.objects.JsonObject;
 
 public class JsonParser {
 
     public static JsonObject parseObj(String s) {
         final Gson gson = new Gson();
-        return gson.fromJson(s, JsonObject.class);
+        return (JsonObject) gson.fromJson(s, JsonObject.class);
     }
 
     public static JsonArray parseArr(String s) {
         final Gson gson = new Gson();
-        return gson.fromJson(s, JsonArray.class);
+        return (JsonArray) gson.fromJson(s, JsonArray.class);
     }
 
     public static Json parse(String s, Class<?> jsonClazz) {
