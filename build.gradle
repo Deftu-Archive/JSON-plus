@@ -10,7 +10,7 @@ apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'java'
 
 group 'xyz.matthewtgm.json'
-version '1.0'
+version '1.1'
 
 repositories {
     mavenCentral()
