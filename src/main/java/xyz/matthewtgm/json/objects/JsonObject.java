@@ -1,6 +1,7 @@
 package xyz.matthewtgm.json.objects;
 
 import xyz.matthewtgm.json.base.Json;
+import xyz.matthewtgm.json.parsing.JsonParser;
 import xyz.matthewtgm.json.util.Utils;
 
 import java.util.HashMap;
@@ -8,7 +9,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 
-public class JsonObject extends HashMap<String, Object> implements Json, ConcurrentMap<String, Object> {
+public class JsonObject<K extends String, V> extends HashMap<K, V> implements Json, ConcurrentMap<K, V> {
 
     /**
      * the map to get the json from.
@@ -16,20 +17,14 @@ public class JsonObject extends HashMap<String, Object> implements Json, Concurr
      * @return the current object in a proper JSON format
      */
     public String toJson(Map<?, ?> map) {
-        if (map == null)
-            return "null";
-
+        if (map == null) return "null";
         StringBuffer sb = new StringBuffer();
         boolean first = true;
-        Iterator iter = map.entrySet().iterator();
-
+        Iterator<?> iter = map.entrySet().iterator();
         sb.append('{');
         while (iter.hasNext()) {
-            if (first)
-                first = false;
-            else
-                sb.append(',');
-
+            if (first) first = false;
+            else sb.append(',');
             Map.Entry<?, ?> entry = (Map.Entry<?, ?>) iter.next();
             toJson(String.valueOf(entry.getKey()), entry.getValue(), sb);
         }
@@ -45,25 +40,21 @@ public class JsonObject extends HashMap<String, Object> implements Json, Concurr
      */
     public String toJson(String k, Object v, StringBuffer sb) {
         sb.append('\"');
-        if (k == null)
-            sb.append("null");
-        else
-            Utils.escape(k, sb);
+        if (k == null) sb.append("null");
+        else Utils.escape(k, sb);
         sb.append('\"').append(':');
-
         sb.append(Utils.toJsonString(v));
-
         return sb.toString();
     }
 
     @Override
     public String toJson() {
-        return this.toJson(this);
+        return toJson(this);
     }
 
     @Override
     public String toString() {
-        return this.toJson();
+        return toJson();
     }
 
     /**
@@ -73,58 +64,62 @@ public class JsonObject extends HashMap<String, Object> implements Json, Concurr
      * @param value the value you're adding to this object
      * @return the object itself - QOL
      */
-    public JsonObject add(String key, Object value) {
+    public JsonObject<K, V> add(K key, V value) {
         super.put(key, value);
         return this;
     }
 
-    public <T> T get(String key, Class<?> type) {
-        if (!this.containsKey(key)) {
-            Object newVal = new Object();
+    public <T> T get(K key, Class<V> type) {
+        if (!containsKey(key)) {
+            Object newVal = null;
             if (type.isAssignableFrom(Boolean.class)) newVal = Boolean.FALSE;
-            if (type.isAssignableFrom(Double.class)) newVal = 0D;
-            if (type.isAssignableFrom(Float.class)) newVal = 0F;
+            if (type.isAssignableFrom(Double.class)) newVal = 0d;
+            if (type.isAssignableFrom(Float.class)) newVal = 0f;
             if (type.isAssignableFrom(Long.class)) newVal = 0L;
             if (type.isAssignableFrom(Integer.class)) newVal = 0;
             if (type.isAssignableFrom(Short.class)) newVal = 0;
-            if (type.isAssignableFrom(Character.class)) newVal = 'A';
+            if (type.isAssignableFrom(String.class)) newVal = "";
+            if (type.isAssignableFrom(Character.class)) newVal = 'C';
             if (type.isAssignableFrom(Byte.class)) newVal = 0;
             if (type.isAssignableFrom(JsonObject.class)) newVal = new JsonObject();
             if (type.isAssignableFrom(JsonArray.class)) newVal = new JsonArray();
-            this.put(key, newVal);
+            put(key, (V) newVal);
         }
-        return (T) this.get(key);
+        return (T) get(key);
     }
 
-    public short getValueAsShort(String key) {
-        return (short) get(key);
+    public long getAsLong(String key) {
+        return Long.parseLong(getAsString(key));
     }
-    public int getValueAsInt(String key) {
-        return (int) get(key);
+    public short getAsShort(String key) {
+        return Short.parseShort(getAsString(key));
     }
-    public byte getValueAsByte(String key) {
-        return (byte) get(key);
+    public int getAsInt(String key) {
+        return Integer.parseInt(getAsString(key));
     }
-    public float getValueAsFloat(String key) {
-        return (float) get(key);
+    public byte getAsByte(String key) {
+        return Byte.parseByte(getAsString(key));
     }
-    public double getValueAsDouble(String key) {
-        return (double) get(key);
+    public float getAsFloat(String key) {
+        return Float.parseFloat(getAsString(key));
     }
-    public char getValueAsChar(String key) {
-        return (char) get(key);
+    public double getAsDouble(String key) {
+        return Double.parseDouble(getAsString(key));
     }
-    public boolean getValueAsBoolean(String key) {
-        return (boolean) get(key);
+    public char getAsChar(String key) {
+        return getAsString(key).charAt(0);
     }
-    public String getValueAsString(String key) {
-        return (String) get(key);
+    public boolean getAsBoolean(String key) {
+        return Boolean.parseBoolean(getAsString(key));
     }
-    public JsonObject getValueAsJsonObject(String key) {
-        return (JsonObject) get(key);
+    public String getAsString(String key) {
+        return String.valueOf(get(key));
     }
-    public JsonArray getValueAsJsonArray(String key) {
-        return (JsonArray) get(key);
+    public JsonObject getAsJsonObject(String key) {
+        return JsonParser.parseObj(get(key).toString());
+    }
+    public JsonArray getAsJsonArray(String key) {
+        return JsonParser.parseArr(get(key).toString());
     }
 
 }

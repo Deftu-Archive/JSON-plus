@@ -1,7 +1,5 @@
 package xyz.matthewtgm.json.files;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import xyz.matthewtgm.json.base.Json;
 import xyz.matthewtgm.json.objects.JsonArray;
 import xyz.matthewtgm.json.objects.JsonObject;
@@ -14,24 +12,19 @@ import java.io.IOException;
 
 public class JsonWriter {
 
-    private static final Gson gson = new GsonBuilder()
-            .setPrettyPrinting()
-            .create();
-
     /**
      * Writes a file with the object specified as its contents
      *
      * @param object    the object being written
      * @param directory the directory to write to
      */
-    public static void writeObj(String fileName, JsonObject object, File directory, boolean pretty) {
+    public static void writeObj(String fileName, JsonObject<?, ?> object, File directory, boolean pretty) {
         BufferedWriter writer = null;
         try {
-            if (!directory.exists())
-                directory.mkdirs();
+            if (!directory.exists()) if (!directory.mkdirs()) throw new IllegalStateException("Directory didn't exist, failed to create it.");
             String content = pretty ? JsonHelper.makePretty(object) : object.toJson();
             File file = new File(directory, fileName + ".json");
-            if (!file.exists()) file.createNewFile();
+            if (!file.exists()) if (!file.createNewFile()) throw new IllegalStateException("Failed to create JSON file.");
             writer = new BufferedWriter(new FileWriter(file));
             writer.write(content);
         } catch (Exception e) {
@@ -58,14 +51,13 @@ public class JsonWriter {
      * @param array     the object being written
      * @param directory the directory to write to
      */
-    public static void writeArr(String fileName, JsonArray array, File directory, boolean pretty) {
+    public static void writeArr(String fileName, JsonArray<?> array, File directory, boolean pretty) {
         BufferedWriter writer = null;
         try {
-            if (!directory.exists())
-                directory.mkdirs();
+            if (!directory.exists()) if (!directory.mkdirs()) throw new IllegalStateException("Directory didn't exist, failed to create it.");
             String content = pretty ? JsonHelper.makePretty(array) : array.toJson();
             File file = new File(directory, fileName + ".json");
-            if (!file.exists()) file.createNewFile();
+            if (!file.exists()) if (!file.createNewFile()) throw new IllegalStateException("Failed to create JSON file.");
             writer = new BufferedWriter(new FileWriter(file));
             writer.write(content);
         } catch (Exception e) {
@@ -95,11 +87,10 @@ public class JsonWriter {
     public static void write(String fileName, Json json, File directory, boolean pretty) {
         BufferedWriter writer = null;
         try {
-            if (!directory.exists())
-                directory.mkdirs();
+            if (!directory.exists()) if (!directory.mkdirs()) throw new IllegalStateException("Directory didn't exist, failed to create it.");
             String content = pretty ? JsonHelper.makePretty(json) : json.toJson();
             File file = new File(directory, fileName + ".json");
-            if (!file.exists()) file.createNewFile();
+            if (!file.exists()) if (!file.createNewFile()) throw new IllegalStateException("Failed to create JSON file.");
             writer = new BufferedWriter(new FileWriter(file));
             writer.write(content);
         } catch (Exception e) {

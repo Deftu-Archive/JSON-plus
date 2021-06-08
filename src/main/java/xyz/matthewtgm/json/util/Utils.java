@@ -9,47 +9,26 @@ import java.util.Map;
 public class Utils {
 
     public static String toJsonString(Object value) {
-        if (value == null)
-            return "null";
-
-        if (value instanceof String)
-            return "\"" + escape((String) value) + "\"";
-
+        if (value == null) return "null";
+        if (value instanceof String) return "\"" + escape((String) value) + "\"";
         if (value instanceof Double) {
-            if (((Double) value).isInfinite() || ((Double) value).isNaN())
-                return "null";
-            else
-                return value.toString();
+            if (((Double) value).isInfinite() || ((Double) value).isNaN()) return "null";
+            else return value.toString();
         }
-
         if (value instanceof Float) {
-            if (((Float) value).isInfinite() || ((Float) value).isNaN())
-                return "null";
-            else
-                return value.toString();
+            if (((Float) value).isInfinite() || ((Float) value).isNaN()) return "null";
+            else return value.toString();
         }
-
-        if (value instanceof Number)
-            return value.toString();
-
-        if (value instanceof Boolean)
-            return value.toString();
-
-        if ((value instanceof Json))
-            return ((Json) value).toJson();
-
-        if (value instanceof Map)
-            return toJsonObjectString((Map) value);
-
-        if (value instanceof List)
-            return toJsonArrayString((List) value);
-
+        if (value instanceof Number) return value.toString();
+        if (value instanceof Boolean) return value.toString();
+        if ((value instanceof Json)) return ((Json) value).toJson();
+        if (value instanceof Map) return toJsonObjectString((Map) value);
+        if (value instanceof List) return toJsonArrayString((List) value);
         return value.toString();
     }
 
     public static String escape(String s) {
-        if (s == null)
-            return null;
+        if (s == null) return null;
         StringBuffer sb = new StringBuffer();
         escape(s, sb);
         return sb.toString();
@@ -98,22 +77,16 @@ public class Utils {
         }
     }
 
-    private static String toJsonObjectString(Map map) {
-        if (map == null)
-            return "null";
-
+    private static String toJsonObjectString(Map<?, ?> map) {
+        if (map == null) return "null";
         StringBuffer sb = new StringBuffer();
         boolean first = true;
-        Iterator iter = map.entrySet().iterator();
-
+        Iterator<?> iter = map.entrySet().iterator();
         sb.append('{');
         while (iter.hasNext()) {
-            if (first)
-                first = false;
-            else
-                sb.append(',');
-
-            Map.Entry entry = (Map.Entry) iter.next();
+            if (first) first = false;
+            else sb.append(',');
+            Map.Entry<?, ?> entry = (Map.Entry<?, ?>) iter.next();
             toJsonObjectString(String.valueOf(entry.getKey()), entry.getValue(), sb);
         }
         sb.append('}');
@@ -122,32 +95,22 @@ public class Utils {
 
     private static String toJsonObjectString(String k, Object v, StringBuffer sb) {
         sb.append('\"');
-        if(k == null)
-            sb.append("null");
-        else
-            Utils.escape(k, sb);
+        if(k == null) sb.append("null");
+        else Utils.escape(k, sb);
         sb.append('\"').append(':');
-
         sb.append(toJsonString(v));
-
         return sb.toString();
     }
 
     private static String toJsonArrayString(List list) {
-        if(list == null)
-            return "null";
-
+        if(list == null) return "null";
         boolean first = true;
         StringBuffer sb = new StringBuffer();
         Iterator iter=list.iterator();
-
         sb.append('[');
         while(iter.hasNext()){
-            if(first)
-                first = false;
-            else
-                sb.append(',');
-
+            if(first) first = false;
+            else sb.append(',');
             Object value=iter.next();
             if(value == null){
                 sb.append("null");

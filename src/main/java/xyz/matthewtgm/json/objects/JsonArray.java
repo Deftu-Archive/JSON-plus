@@ -7,23 +7,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class JsonArray extends CopyOnWriteArrayList<Object> implements Json {
+public class JsonArray<T> extends CopyOnWriteArrayList<T> implements Json {
 
-    public String toJson(List<Object> list) {
-        if (list == null)
-            return "null";
-
+    public String toJson(List<T> list) {
+        if (list == null) return "null";
         boolean first = true;
-        StringBuffer sb = new StringBuffer();
-        Iterator<Object> iter = list.iterator();
-
+        StringBuilder sb = new StringBuilder();
+        Iterator<?> iter = list.iterator();
         sb.append('[');
         while (iter.hasNext()) {
-            if (first)
-                first = false;
-            else
-                sb.append(',');
-
+            if (first) first = false;
+            else sb.append(',');
             Object value = iter.next();
             if (value == null) {
                 sb.append("null");
@@ -37,12 +31,12 @@ public class JsonArray extends CopyOnWriteArrayList<Object> implements Json {
 
     @Override
     public String toJson() {
-        return this.toJson(this);
+        return toJson(this);
     }
 
     @Override
     public String toString() {
-        return this.toJson();
+        return toJson();
     }
 
     /**
@@ -51,8 +45,8 @@ public class JsonArray extends CopyOnWriteArrayList<Object> implements Json {
      * @param key the name of the variable.
      * @return the object itself - QOL.
      */
-    public JsonArray plus(Object key) {
-        super.add(key);
+    public JsonArray<T> plus(T key) {
+        add(key);
         return this;
     }
 
