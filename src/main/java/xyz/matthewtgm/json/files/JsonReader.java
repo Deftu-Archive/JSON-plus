@@ -11,7 +11,7 @@ import java.io.FileReader;
 
 public class JsonReader {
 
-    public static JsonObject<? ,?> readObj(String name, File directory) {
+    public static <K extends String, V> JsonObject<K ,V> readObj(String name, File directory) {
         try {
             if (!directory.exists()) directory.mkdirs();
             File file = new File(directory, name + ".json");
@@ -25,7 +25,7 @@ public class JsonReader {
         }
     }
 
-    public static JsonArray<?> readArr(String name, File directory) {
+    public static <T> JsonArray<T> readArr(String name, File directory) {
         try {
             if (!directory.exists()) directory.mkdirs();
             File file = new File(directory, name + ".json");

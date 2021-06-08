@@ -9,11 +9,11 @@ public class JsonParser {
 
     private static final Gson gson = new Gson();
 
-    public static JsonObject<?, ?> parseObj(String s) {
+    public static <K extends String, V> JsonObject<K, V> parseObj(String s) {
         return gson.fromJson(s, JsonObject.class);
     }
 
-    public static JsonArray<?> parseArr(String s) {
+    public static <T> JsonArray<T> parseArr(String s) {
         return gson.fromJson(s, JsonArray.class);
     }
 
