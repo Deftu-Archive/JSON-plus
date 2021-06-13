@@ -6,17 +6,24 @@ import xyz.matthewtgm.json.util.Utils;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 
 public class JsonObject<K extends String, V> extends HashMap<K, V> implements Json, ConcurrentMap<K, V> {
+
+    public JsonObject() {}
+
+    public JsonObject(Map<K, V> map) {
+        super(map);
+    }
 
     /**
      * the map to get the json from.
      *
      * @return the current object in a proper JSON format
      */
-    public String toJson(Map<?, ?> map) {
+    public String toJson(Map<K, V> map) {
         if (map == null) return "null";
         StringBuffer sb = new StringBuffer();
         boolean first = true;
@@ -115,11 +122,11 @@ public class JsonObject<K extends String, V> extends HashMap<K, V> implements Js
     public String getAsString(String key) {
         return String.valueOf(get(key));
     }
-    public JsonObject getAsJsonObject(String key) {
-        return JsonParser.parseObj(get(key).toString());
+    public JsonObject<K, V> getAsJsonObject(String key) {
+        return new JsonObject<>((Map<K, V>) get(key));
     }
-    public JsonArray getAsJsonArray(String key) {
-        return JsonParser.parseArr(get(key).toString());
+    public JsonArray<Object> getAsJsonArray(String key) {
+        return new JsonArray<>((List<Object>) get(key));
     }
 
 }

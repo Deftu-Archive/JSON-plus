@@ -9,6 +9,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class JsonArray<T> extends CopyOnWriteArrayList<T> implements Json {
 
+    public JsonArray() {}
+
+    public JsonArray(List<T> list) {
+        super(list);
+    }
+
     public String toJson(List<T> list) {
         if (list == null) return "null";
         boolean first = true;
