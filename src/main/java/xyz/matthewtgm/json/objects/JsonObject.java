@@ -96,37 +96,56 @@ public class JsonObject<K extends String, V> extends HashMap<K, V> implements Js
     }
 
     public long getAsLong(String key) {
+        if (!containsKey(key)) return returnDefault(Long.class, new Class[]{Long.class}, new Long[]{0L});
         return Long.parseLong(getAsString(key));
     }
     public short getAsShort(String key) {
+        if (!containsKey(key)) return returnDefault(Short.class, new Class[]{Short.class}, new Short[]{0});
         return Short.parseShort(getAsString(key));
     }
     public int getAsInt(String key) {
+        if (!containsKey(key)) return returnDefault(Integer.class, new Class[]{Integer.class}, new Integer[]{0});
         return Integer.parseInt(getAsString(key));
     }
     public byte getAsByte(String key) {
+        if (!containsKey(key)) return returnDefault(Byte.class, new Class[]{Byte.class}, new Byte[]{0});
         return Byte.parseByte(getAsString(key));
     }
     public float getAsFloat(String key) {
+        if (!containsKey(key)) return returnDefault(Float.class, new Class[]{Float.class}, new Float[]{0f});
         return Float.parseFloat(getAsString(key));
     }
     public double getAsDouble(String key) {
+        if (!containsKey(key)) return returnDefault(Double.class, new Class[]{Double.class}, new Double[]{0d});
         return Double.parseDouble(getAsString(key));
     }
     public char getAsChar(String key) {
+        if (!containsKey(key)) return returnDefault(Character.class, new Class[]{Character.class}, new Character[]{'a'});
         return getAsString(key).charAt(0);
     }
     public boolean getAsBoolean(String key) {
+        if (!containsKey(key)) return returnDefault(Boolean.class, new Class[]{Boolean.class}, new Boolean[]{false});
         return Boolean.parseBoolean(getAsString(key));
     }
     public String getAsString(String key) {
+        if (!containsKey(key)) return returnDefault(String.class, new Class[]{String.class}, new String[]{""});
         return String.valueOf(get(key));
     }
     public JsonObject<K, V> getAsJsonObject(String key) {
+        if (!containsKey(key)) return returnDefault(JsonObject.class, new Class[0], new JsonObject[0]);
         return new JsonObject<>((Map<K, V>) get(key));
     }
     public JsonArray<Object> getAsJsonArray(String key) {
+        if (!containsKey(key)) return returnDefault(JsonArray.class, new Class[0], new JsonArray[0]);
         return new JsonArray<>((List<Object>) get(key));
+    }
+    private <T> T returnDefault(Class<T> typeOfT, Class<T>[] constructorTypes, T[] constructorParams) {
+        try {
+            return typeOfT.getConstructor(constructorTypes).newInstance((Object) constructorParams);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }
