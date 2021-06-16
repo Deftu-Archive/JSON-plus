@@ -1,6 +1,5 @@
 package xyz.matthewtgm.json.parsing;
 
-import com.google.gson.Gson;
 import xyz.matthewtgm.json.base.Json;
 import xyz.matthewtgm.json.objects.JsonArray;
 import xyz.matthewtgm.json.objects.JsonObject;

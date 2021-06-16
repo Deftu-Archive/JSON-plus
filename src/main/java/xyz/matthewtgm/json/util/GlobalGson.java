@@ -8,12 +8,12 @@ import xyz.matthewtgm.json.gson.adapters.UuidTypeAdapter;
 import xyz.matthewtgm.json.objects.JsonArray;
 import xyz.matthewtgm.json.objects.JsonObject;
 
+import java.lang.reflect.Type;
 import java.util.UUID;
 
 public class GlobalGson {
 
     private static GsonBuilder globalBuilder;
-
     private static Gson gson;
     private static Gson prettyGson;
 
@@ -25,13 +25,37 @@ public class GlobalGson {
 
     public static Gson getGson() {
         if (gson == null)
-            gson = getGlobalBuilder().create();
+            resetGson();
         return gson;
     }
 
     public static Gson getPrettyGson() {
-        if (prettyGson == null) prettyGson = getGlobalBuilder().setPrettyPrinting().create();
+        if (prettyGson == null)
+            resetPrettyGson();
         return prettyGson;
+    }
+
+    public static void registerTypeAdapters(TypeAdapterHolder... adapters) {
+        for (TypeAdapterHolder adapter : adapters) getGlobalBuilder().registerTypeAdapter(adapter.type, adapter.adapter);
+        resetGson();
+        resetPrettyGson();
+    }
+
+    public static void resetGson() {
+        gson = getGlobalBuilder().create();
+    }
+
+    public static void resetPrettyGson() {
+        prettyGson = getGlobalBuilder().setPrettyPrinting().create();
+    }
+
+    public static class TypeAdapterHolder {
+        public final Type type;
+        public final Object adapter;
+        public TypeAdapterHolder(Type type, Object adapter) {
+            this.type = type;
+            this.adapter = adapter;
+        }
     }
 
 }
