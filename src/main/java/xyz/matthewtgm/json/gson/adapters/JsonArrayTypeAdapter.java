@@ -9,7 +9,7 @@ import java.util.List;
 public class JsonArrayTypeAdapter implements JsonDeserializer<JsonArray>, JsonSerializer<JsonArray> {
 
     public JsonArray deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        return new JsonArray(new GsonBuilder().setLenient().create().fromJson(json.toString(), List.class));
+        return new JsonArray(TypeAdapterGlobals.gson.fromJson(json.toString(), List.class));
     }
 
     public JsonElement serialize(JsonArray src, Type typeOfSrc, JsonSerializationContext context) {
