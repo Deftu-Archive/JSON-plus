@@ -10,11 +10,11 @@ import java.util.Map;
 public class JsonObjectTypeAdapter implements JsonDeserializer<JsonObject>, JsonSerializer<JsonObject> {
 
     public JsonObject deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        return new JsonObject(GlobalGson.getGson().fromJson(json.getAsString(), Map.class));
+        return xyz.matthewtgm.json.parsing.JsonParser.parseObj(json.getAsString());
     }
 
     public JsonElement serialize(JsonObject src, Type typeOfSrc, JsonSerializationContext context) {
-        return GlobalGson.getGson().fromJson(src.toJson(), com.google.gson.JsonObject.class);
+        return JsonParser.parseString(src.toJson());
     }
 
 }
