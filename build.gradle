@@ -26,4 +26,5 @@ shadowJar {
     archiveClassifier.set('')
 }
 
+if (plugins.findPlugin("maven-publish") != null) tasks.install.dependsOn(tasks.build)
 tasks.build.dependsOn(tasks.shadowJar)
