@@ -59,6 +59,10 @@ public class JsonObject<K extends String, V> extends HashMap<K, V> implements Js
         return toJson(this);
     }
 
+    public JsonObject<K, V> cloneJson() {
+        return new JsonObject<>(this);
+    }
+
     @Override
     public String toString() {
         return toJson();

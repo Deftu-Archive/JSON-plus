@@ -40,6 +40,10 @@ public class JsonArray<T> extends CopyOnWriteArrayList<T> implements Json {
         return toJson(this);
     }
 
+    public JsonArray<T> cloneJson() {
+        return new JsonArray<>(this);
+    }
+
     @Override
     public String toString() {
         return toJson();
