@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'xyz.matthewtgm.json'
-version '1.5'
+version '1.5.2'
 
 repositories {
     mavenCentral()
@@ -26,5 +26,4 @@ shadowJar {
     archiveClassifier.set('')
 }
 
-if (plugins.findPlugin("maven-publish") != null) tasks.install.dependsOn(tasks.build)
-tasks.build.dependsOn(tasks.shadowJar)
+jar.finalizedBy(shadowJar)
