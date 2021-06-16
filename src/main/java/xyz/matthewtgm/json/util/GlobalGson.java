@@ -12,28 +12,25 @@ import java.util.UUID;
 
 public class GlobalGson {
 
-    private static final GsonBuilder globalBuilder = new GsonBuilder()
-            .registerTypeAdapter(JsonObject.class, new JsonObjectTypeAdapter())
-            .registerTypeAdapter(JsonArray.class, new JsonArrayTypeAdapter())
-            .registerTypeAdapter(UUID.class, new UuidTypeAdapter())
+    private static GsonBuilder globalBuilder;
 
-            .setLenient();
-
-    private static final Gson gson = globalBuilder
-            .create();
-    private static final Gson prettyGson = globalBuilder
-            .setPrettyPrinting()
-            .create();
+    private static Gson gson;
+    private static Gson prettyGson;
 
     public static GsonBuilder getGlobalBuilder() {
+        if (globalBuilder == null)
+            globalBuilder = new GsonBuilder().registerTypeAdapter(JsonObject.class, new JsonObjectTypeAdapter()).registerTypeAdapter(JsonArray.class, new JsonArrayTypeAdapter()).registerTypeAdapter(UUID.class, new UuidTypeAdapter()).setLenient();
         return globalBuilder;
     }
 
     public static Gson getGson() {
+        if (gson == null)
+            gson = getGlobalBuilder().create();
         return gson;
     }
 
     public static Gson getPrettyGson() {
+        if (prettyGson == null) prettyGson = getGlobalBuilder().setPrettyPrinting().create();
         return prettyGson;
     }
 
