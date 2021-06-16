@@ -1,35 +1,29 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.4'
-    }
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
-apply plugin: 'com.github.johnrengelman.shadow'
-apply plugin: 'java'
 
 group 'xyz.matthewtgm.json'
 version '1.5'
 
 repositories {
     mavenCentral()
-    maven {
-        name = "JitPack"
-        url = "https://jitpack.io"
-    }
+}
+
+configurations {
+    shade
+    compileOnly.extendsFrom(shade)
 }
 
 dependencies {
-    compile('com.google.code.gson:gson:2.8.6')
+    shade('com.google.code.gson:gson:2.8.6')
 }
 
 shadowJar {
-    dependencies {
-        include(dependency('com.google.code.gson:gson:2.8.6'))
-    }
-
-    exclude('dummyThing')
+    configurations = [project.configurations.shade]
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    exclude('module-info.class')
+    archiveClassifier.set('')
 }
 
 tasks.build.dependsOn(tasks.shadowJar)
