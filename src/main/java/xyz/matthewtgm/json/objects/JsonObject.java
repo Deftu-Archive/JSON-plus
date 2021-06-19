@@ -1,7 +1,6 @@
 package xyz.matthewtgm.json.objects;
 
 import xyz.matthewtgm.json.base.Json;
-import xyz.matthewtgm.json.parsing.JsonParser;
 import xyz.matthewtgm.json.util.Utils;
 
 import java.util.HashMap;
@@ -100,53 +99,53 @@ public class JsonObject<K extends String, V> extends HashMap<K, V> implements Js
     }
 
     public long getAsLong(String key) {
-        if (!isNotNullOrEmptyOrNonPresent(key)) return 0L;
+        if (isNullOrEmptyOrNonPresent(key)) return 0L;
         return Long.parseLong(getAsString(key));
     }
     public short getAsShort(String key) {
-        if (!isNotNullOrEmptyOrNonPresent(key)) return 0;
+        if (isNullOrEmptyOrNonPresent(key)) return 0;
         return Short.parseShort(getAsString(key));
     }
     public int getAsInt(String key) {
-        if (!isNotNullOrEmptyOrNonPresent(key)) return 0;
+        if (isNullOrEmptyOrNonPresent(key)) return 0;
         return Integer.parseInt(getAsString(key));
     }
     public byte getAsByte(String key) {
-        if (!isNotNullOrEmptyOrNonPresent(key)) return 0;
+        if (isNullOrEmptyOrNonPresent(key)) return 0;
         return Byte.parseByte(getAsString(key));
     }
     public float getAsFloat(String key) {
-        if (!isNotNullOrEmptyOrNonPresent(key)) return 0f;
+        if (isNullOrEmptyOrNonPresent(key)) return 0f;
         return Float.parseFloat(getAsString(key));
     }
     public double getAsDouble(String key) {
-        if (!isNotNullOrEmptyOrNonPresent(key)) return 0d;
+        if (isNullOrEmptyOrNonPresent(key)) return 0d;
         return Double.parseDouble(getAsString(key));
     }
     public char getAsChar(String key) {
-        if (!isNotNullOrEmptyOrNonPresent(key)) return 'c';
+        if (isNullOrEmptyOrNonPresent(key)) return 'c';
         return getAsString(key).charAt(0);
     }
     public boolean getAsBoolean(String key) {
-        if (!isNotNullOrEmptyOrNonPresent(key)) return false;
+        if (isNullOrEmptyOrNonPresent(key)) return false;
         return Boolean.parseBoolean(getAsString(key));
     }
     public String getAsString(String key) {
-        if (!isNotNullOrEmptyOrNonPresent(key)) return "";
+        if (isNullOrEmptyOrNonPresent(key)) return "";
         return String.valueOf(get(key));
     }
     public JsonObject<K, V> getAsJsonObject(String key) {
-        if (!isNotNullOrEmptyOrNonPresent(key)) return new JsonObject<>();
+        if (isNullOrEmptyOrNonPresent(key)) return new JsonObject<>();
         return new JsonObject<>((Map<K, V>) get(key));
     }
     public <T> JsonArray<T> getAsJsonArray(String key) {
-        if (!isNotNullOrEmptyOrNonPresent(key)) return new JsonArray<>();
+        if (isNullOrEmptyOrNonPresent(key)) return new JsonArray<>();
         return new JsonArray<>((List<T>) get(key));
     }
 
-    private boolean isNotNullOrEmptyOrNonPresent(String key) {
-        String get = getAsString(key);
-        return !key.isEmpty() && containsKey(key) && get != null && !get.isEmpty() && !get.equalsIgnoreCase("null");
+    private boolean isNullOrEmptyOrNonPresent(String key) {
+        String get = String.valueOf(get(key));
+        return key.isEmpty() || !containsKey(key) || get == null || get.isEmpty() || get.equalsIgnoreCase("null");
     }
 
 }
