@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'xyz.matthewtgm.json'
-version '1.7.1'
+version '1.8'
 
 repositories {
     mavenCentral()
@@ -22,6 +22,7 @@ dependencies {
 shadowJar {
     configurations = [project.configurations.shade]
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    relocate('com.google.gson', 'xyz.matthewtgm.google.gson')
     exclude('module-info.class')
     archiveClassifier.set('')
 }
