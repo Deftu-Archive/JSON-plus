@@ -15,7 +15,7 @@ public class JsonSerializer {
     public static void serialize(Object instance, Class<?> type) {
         if (type.isAnnotationPresent(JsonSerialize.class)) {
             JsonSerialize serialize = type.getAnnotation(JsonSerialize.class);
-            JsonWriter.writeObj(fixFileName(serialize.value()), jsonify(instance, type), parent(new File(serialize.value())), serialize.pretty());
+            JsonWriter.write(fixFileName(serialize.value()), jsonify(instance, type), parent(new File(serialize.value())), serialize.pretty());
         } else throw new IllegalStateException("The class provided isn't meant to be serialized! ( " + type.getSimpleName() + " )");
     }
 
@@ -74,13 +74,10 @@ public class JsonSerializer {
 
     private static File parent(File file) {
         File parent = file.getParentFile();
-        try {
-            if (parent == null) parent = new File("./");
-            if (!parent.exists()) parent.mkdirs();
-            if (!file.exists()) file.createNewFile();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        if (parent == null)
+            parent = new File("./");
+        if (!parent.exists())
+            parent.mkdirs();
         return parent;
     }
 

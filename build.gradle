@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'xyz.matthewtgm.json'
-version = '1.9.1'
+version = '1.10'
 
 repositories {
     mavenCentral()
@@ -12,7 +12,8 @@ repositories {
 
 configurations {
     shade
-    compileOnly.extendsFrom(shade)
+    implementation.extendsFrom(shade)
+    testImplementation.extendsFrom(shade)
 }
 
 dependencies {
