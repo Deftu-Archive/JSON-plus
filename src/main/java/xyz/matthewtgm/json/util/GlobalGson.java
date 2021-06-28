@@ -19,19 +19,21 @@ public class GlobalGson {
 
     public static GsonBuilder getGlobalBuilder() {
         if (globalBuilder == null)
-            globalBuilder = new GsonBuilder().registerTypeAdapter(JsonObject.class, new JsonObjectTypeAdapter()).registerTypeAdapter(JsonArray.class, new JsonArrayTypeAdapter()).registerTypeAdapter(UUID.class, new UuidTypeAdapter()).setLenient();
+            globalBuilder = new GsonBuilder()
+                .registerTypeAdapter(JsonObject.class, new JsonObjectTypeAdapter())
+                .registerTypeAdapter(JsonArray.class, new JsonArrayTypeAdapter())
+                .registerTypeAdapter(UUID.class, new UuidTypeAdapter())
+                .setLenient();
         return globalBuilder;
     }
 
     public static Gson getGson() {
-        if (gson == null)
-            resetGson();
+        if (gson == null) resetGson();
         return gson;
     }
 
     public static Gson getPrettyGson() {
-        if (prettyGson == null)
-            resetPrettyGson();
+        if (prettyGson == null) resetPrettyGson();
         return prettyGson;
     }
 

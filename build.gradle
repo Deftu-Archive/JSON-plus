@@ -3,8 +3,8 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
-group 'xyz.matthewtgm.json'
-version '1.8.1'
+group = 'xyz.matthewtgm.json'
+version = '1.9'
 
 repositories {
     mavenCentral()

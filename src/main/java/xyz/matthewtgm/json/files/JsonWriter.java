@@ -19,12 +19,22 @@ public class JsonWriter {
      * @param directory the directory to write to
      */
     public static void writeObj(String fileName, JsonObject<?, ?> object, File directory, boolean pretty) {
+        System.out.println(fileName);
+        System.out.println(directory);
         BufferedWriter writer = null;
         try {
-            if (!directory.exists()) if (!directory.mkdirs()) throw new IllegalStateException("Directory didn't exist, failed to create it.");
+            if (!directory.exists()) {
+                if (!directory.mkdirs()) {
+                    throw new IllegalStateException("Directory didn't exist, failed to create it.");
+                }
+            }
             String content = pretty ? JsonHelper.makePretty(object) : object.toJson();
             File file = new File(directory, fileName + ".json");
-            if (!file.exists()) if (!file.createNewFile()) throw new IllegalStateException("Failed to create JSON file.");
+            if (!file.exists()) {
+                if (!file.createNewFile()) {
+                    throw new IllegalStateException("Failed to create JSON file.");
+                }
+            }
             writer = new BufferedWriter(new FileWriter(file));
             writer.write(content);
         } catch (Exception e) {
