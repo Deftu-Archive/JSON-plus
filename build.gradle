@@ -21,25 +21,16 @@ configurations {
 
 dependencies {}
 
-shadowJar {
-    configurations = [project.configurations.shade]
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    archiveClassifier.set('')
-}
-
 sourceSets {
 
     serialization {
         compileClasspath += main.output
-        runtimeClasspath += main.output
     }
     files {
         compileClasspath += main.output
-        runtimeClasspath += main.output
     }
     utils {
         compileClasspath += main.output
-        runtimeClasspath += main.output
     }
 
     test {
@@ -52,6 +43,18 @@ sourceSets {
         compileClasspath += utils.output
         runtimeClasspath += utils.output
     }
+
+}
+
+shadowJar {
+    configurations = [project.configurations.shade]
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    from sourceSets.serialization.output
+    from sourceSets.files.output
+    from sourceSets.utils.output
+
+    archiveClassifier.set('')
 }
 
 jar.finalizedBy(shadowJar)

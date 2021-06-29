@@ -25,6 +25,26 @@ public class JsonArray extends JsonElement {
         return new JsonArray(this);
     }
 
+    public JsonArray add(Object element) {
+        elements.add(new JsonPrimitive(element));
+        return this;
+    }
+
+    public JsonArray addAll(Object... elements) {
+        for (Object element : elements) add(element);
+        return this;
+    }
+
+    public JsonArray set(int index, Object element) {
+        elements.set(index, new JsonPrimitive(element));
+        return this;
+    }
+
+    public JsonArray remove(Object element) {
+        elements.remove(new JsonPrimitive(element));
+        return this;
+    }
+
     public JsonArray add(JsonElement element) {
         elements.add(element);
         return this;

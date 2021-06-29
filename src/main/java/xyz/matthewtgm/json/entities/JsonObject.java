@@ -1,5 +1,7 @@
 package xyz.matthewtgm.json.entities;
 
+import xyz.matthewtgm.json.parser.JsonParserHelper;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -33,6 +35,11 @@ public class JsonObject extends JsonElement {
 
     public JsonObject remove(String key) {
         members.remove(key);
+        return this;
+    }
+
+    public JsonObject add(String key, Object value) {
+        members.put(key, new JsonPrimitive(value));
         return this;
     }
 
@@ -77,7 +84,7 @@ public class JsonObject extends JsonElement {
     }
 
     public String toString() {
-        return members.toString();
+        return JsonParserHelper.createObjectString(members);
     }
 
     public boolean equals(Object o) {

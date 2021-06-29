@@ -11,11 +11,11 @@ import java.util.Map;
 public class JsonParser {
 
     public static JsonElement parse(String input, Class<? extends JsonElement> type) {
-        System.out.println(input);
+        System.out.println("Initial input: " + input);
         boolean object = type.isAssignableFrom(JsonObject.class);
         boolean array = type.isAssignableFrom(JsonArray.class);
-        if (object && !input.startsWith("{")) JsonParserHelper.throwParseException("Expected the beginning of an object.");
-        if (array && !input.startsWith("[")) JsonParserHelper.throwParseException("Expected the beginning of an array.");
+        if (object && (!input.startsWith("{") || !input.endsWith("}"))) JsonParserHelper.throwParseException("Expected the beginning of an object.");
+        if (array && (!input.startsWith("[") || !input.endsWith("]"))) JsonParserHelper.throwParseException("Expected the beginning of an array.");
 
         if (object) return JsonParserHelper.parseObject(input);
         if (array) return JsonParserHelper.parseArray(input);
@@ -25,25 +25,13 @@ public class JsonParser {
     }
 
     public static JsonElement parse(String input) {
-        if (input.startsWith("{")) return parse(input, JsonObject.class);
-        if (input.startsWith("[")) return parse(input, JsonArray.class);
+        if (input.startsWith("{") && input.endsWith("}")) return parse(input, JsonObject.class);
+        if (input.startsWith("[") && input.endsWith("]")) return parse(input, JsonArray.class);
         return null;
     }
 
     public static JsonElement parse(JsonElement element) {
         return parse(element.toString(), element.getClass());
-    }
-
-    public static JsonPrimitive parseJsonPrimitive(Object val) {
-        if (val == null) val = "null";
-        if (val instanceof String) val = "\"" + JsonParserHelper.escape(val.toString()) + "\"";
-        if (val instanceof Double) val = JsonParserHelper.parseDecimalNumber(val);
-        if (val instanceof Float) val = JsonParserHelper.parseDecimalNumber(val);
-        if (val instanceof Number) val = val.toString();
-        if (val instanceof JsonElement && !(val instanceof JsonPrimitive)) val = val.toString();
-        if (val instanceof Map) val = parse(JsonParserHelper.createObjectString(val), JsonObject.class);
-        if (val instanceof List) val = parse(JsonParserHelper.createArrayString(val), JsonObject.class);
-        return new JsonPrimitive(val);
     }
 
 }

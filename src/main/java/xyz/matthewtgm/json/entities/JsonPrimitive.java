@@ -1,5 +1,8 @@
 package xyz.matthewtgm.json.entities;
 
+import xyz.matthewtgm.json.parser.JsonParser;
+import xyz.matthewtgm.json.parser.JsonParserHelper;
+
 public class JsonPrimitive extends JsonElement {
 
     private final Object value;
@@ -22,7 +25,7 @@ public class JsonPrimitive extends JsonElement {
     }
 
     public String toString() {
-        return value.toString();
+        return JsonParserHelper.parsePrimitive(value);
     }
 
 }

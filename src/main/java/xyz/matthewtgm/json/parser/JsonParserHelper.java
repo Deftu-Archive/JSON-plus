@@ -1,11 +1,13 @@
 package xyz.matthewtgm.json.parser;
 
 import xyz.matthewtgm.json.entities.JsonArray;
+import xyz.matthewtgm.json.entities.JsonElement;
 import xyz.matthewtgm.json.entities.JsonObject;
 import xyz.matthewtgm.json.entities.JsonPrimitive;
 import xyz.matthewtgm.json.exceptions.JsonParseException;
 import xyz.matthewtgm.json.util.Utils;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -23,11 +25,33 @@ public class JsonParserHelper {
     }
 
     static JsonObject parseObject(String input) {
-        return null;
+        input = input.substring(1);
+        input = input.substring(0, input.length() - 1);
+        System.out.println("Input: " + input);
+        Map<String, JsonElement> map = new HashMap<>();
+        String[] split = input.split(",");
+        for (String part : split) {
+            String[] pair = part.split(":");
+            map.put(pair[0].trim(), new JsonPrimitive(parsePrimitive(pair[1].trim())));
+        }
+        System.out.println("Map: " + map);
+        return new JsonObject(map);
     }
 
     static JsonArray parseArray(String input) {
-        return null;
+        return new JsonArray();
+    }
+
+    public static String parsePrimitive(Object val) {
+        if (val == null) val = "null";
+        if (val instanceof String) val = "\"" + JsonParserHelper.escape(val.toString()) + "\"";
+        if (val instanceof Double) val = JsonParserHelper.parseDecimalNumber(val);
+        if (val instanceof Float) val = JsonParserHelper.parseDecimalNumber(val);
+        if (val instanceof Number) val = val.toString();
+        if (val instanceof JsonElement && !(val instanceof JsonPrimitive)) val = val.toString();
+        if (val instanceof Map) val = JsonParser.parse(JsonParserHelper.createObjectString(val), JsonObject.class);
+        if (val instanceof List) val = JsonParser.parse(JsonParserHelper.createArrayString(val), JsonObject.class);
+        return val.toString();
     }
 
     static String escape(String s) {
@@ -96,7 +120,7 @@ public class JsonParserHelper {
         return "null";
     }
 
-    static String createObjectString(Object val) {
+    public static String createObjectString(Object val) {
         Map<?, ?> map = (Map<?, ?>) val;
         StringBuffer sb = new StringBuffer();
         boolean first = true;
@@ -112,14 +136,15 @@ public class JsonParserHelper {
             sb.append('\"');
             if(k == null) sb.append("null");
             else Utils.escape(k, sb);
-            sb.append('\"').append(':');
-            sb.append(JsonParser.parseJsonPrimitive(v));
+            sb.append('\"');
+            sb.append(':');
+            sb.append(parsePrimitive(v));
         }
         sb.append('}');
         return sb.toString();
     }
 
-    static String createArrayString(Object val) {
+    public static String createArrayString(Object val) {
         List<?> list = (List<?>) val;
         boolean first = true;
         StringBuilder sb = new StringBuilder();
@@ -133,7 +158,7 @@ public class JsonParserHelper {
                 sb.append("null");
                 continue;
             }
-            sb.append(JsonParser.parseJsonPrimitive(value));
+            sb.append(parsePrimitive(value));
         }
         sb.append(']');
         return sb.toString();
