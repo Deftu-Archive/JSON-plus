@@ -7,10 +7,7 @@ import xyz.matthewtgm.json.entities.JsonPrimitive;
 import xyz.matthewtgm.json.exceptions.JsonParseException;
 import xyz.matthewtgm.json.util.Utils;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class JsonParserHelper {
 
@@ -27,19 +24,24 @@ public class JsonParserHelper {
     static JsonObject parseObject(String input) {
         input = input.substring(1);
         input = input.substring(0, input.length() - 1);
-        System.out.println("Input: " + input);
         Map<String, JsonElement> map = new HashMap<>();
         String[] split = input.split(",");
         for (String part : split) {
             String[] pair = part.split(":");
-            map.put(pair[0].trim(), new JsonPrimitive(parsePrimitive(pair[1].trim())));
+            map.put(pair[0].trim(), new JsonPrimitive(pair[1].trim()));
         }
         System.out.println("Map: " + map);
         return new JsonObject(map);
     }
 
     static JsonArray parseArray(String input) {
-        return new JsonArray();
+        input = input.substring(1);
+        input = input.substring(0, input.length() - 1);
+        List<JsonElement> list = new ArrayList<>();
+        String[] split = input.split(",");
+        for (String part : split) list.add(new JsonPrimitive(part.trim()));
+        System.out.println("List: " + list);
+        return new JsonArray(list);
     }
 
     public static String parsePrimitive(Object val) {

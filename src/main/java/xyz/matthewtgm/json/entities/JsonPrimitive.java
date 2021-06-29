@@ -1,6 +1,5 @@
 package xyz.matthewtgm.json.entities;
 
-import xyz.matthewtgm.json.parser.JsonParser;
 import xyz.matthewtgm.json.parser.JsonParserHelper;
 
 public class JsonPrimitive extends JsonElement {
