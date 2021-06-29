@@ -1,5 +1,9 @@
 package xyz.matthewtgm.json.util;
 
+import xyz.matthewtgm.json.entities.JsonArray;
+import xyz.matthewtgm.json.entities.JsonObject;
+import xyz.matthewtgm.json.parser.JsonParser;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -7,19 +11,19 @@ import java.net.URL;
 
 public class JsonApiHelper {
 
-    /*public static <K extends String, V> JsonObject<K, V> getJsonObject(String url, boolean useAgent) {
-        return JsonParser.parseObj(getJson(url, useAgent));
+    public static JsonObject getJsonObject(String url, boolean useAgent) {
+        return (JsonObject) JsonParser.parse(getJson(url, useAgent));
     }
 
-    public static <K extends String, V> JsonObject<K, V> getJsonObject(String url) {
+    public static JsonObject getJsonObject(String url) {
         return getJsonObject(url, true);
     }
 
-    public static <T>JsonArray<T> getJsonArray(String url, boolean useAgent) {
-        return JsonParser.parseArr(getJson(url, useAgent));
+    public static JsonArray getJsonArray(String url, boolean useAgent) {
+        return (JsonArray) JsonParser.parse(getJson(url, useAgent));
     }
 
-    public static <T>JsonArray<T> getJsonArray(String url) {
+    public static JsonArray getJsonArray(String url) {
         return getJsonArray(url, true);
     }
 
@@ -43,6 +47,6 @@ public class JsonApiHelper {
 
     public static String getJson(String url) {
         return getJson(url, true);
-    }*/
+    }
 
 }

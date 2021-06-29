@@ -1,5 +1,7 @@
 package xyz.matthewtgm.json.serialization;
 
+import xyz.matthewtgm.json.entities.JsonObject;
+import xyz.matthewtgm.json.files.JsonWriter;
 import xyz.matthewtgm.json.serialization.annotations.JsonSerialize;
 import xyz.matthewtgm.json.serialization.annotations.JsonSerializeExcluded;
 import xyz.matthewtgm.json.serialization.annotations.JsonSerializeName;
@@ -10,7 +12,7 @@ import java.lang.reflect.Method;
 
 public class JsonSerializer {
 
-    /*public static void serialize(Object instance, Class<?> type) {
+    public static void serialize(Object instance, Class<?> type) {
         if (type.isAnnotationPresent(JsonSerialize.class)) {
             JsonSerialize serialize = type.getAnnotation(JsonSerialize.class);
             JsonWriter.write(fixFileName(serialize.value()), jsonify(instance, type), parent(new File(serialize.value())), serialize.pretty());
@@ -21,16 +23,16 @@ public class JsonSerializer {
         serialize(instance, instance.getClass());
     }
 
-    public static JsonObject<String, Object> create(Object instance, Class<?> type) {
+    public static JsonObject create(Object instance, Class<?> type) {
         return jsonify(instance, type);
     }
 
-    public static JsonObject<String, Object> create(Object instance) {
+    public static JsonObject create(Object instance) {
         return create(instance, instance.getClass());
     }
 
-    private static JsonObject<String, Object> jsonify(Object instance, Class<?> type) {
-        JsonObject<String, Object> json = new JsonObject<>();
+    private static JsonObject jsonify(Object instance, Class<?> type) {
+        JsonObject json = new JsonObject();
         try {
             for (Field field : type.getDeclaredFields()) {
                 field.setAccessible(true);
@@ -77,6 +79,6 @@ public class JsonSerializer {
         if (!parent.exists())
             parent.mkdirs();
         return parent;
-    }*/
+    }
 
 }

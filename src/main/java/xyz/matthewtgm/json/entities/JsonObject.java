@@ -5,10 +5,11 @@ import xyz.matthewtgm.json.parser.JsonParserHelper;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class JsonObject extends JsonElement {
 
-    private final Map<String, JsonElement> members = new HashMap<>();
+    private final Map<String, JsonElement> members = new ConcurrentHashMap<>();
 
     public JsonObject(JsonObject parent) {
         if (parent == null || parent.members == null) throw new NullPointerException("Parent object is null!");

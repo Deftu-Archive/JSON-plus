@@ -23,25 +23,27 @@ dependencies {}
 
 sourceSets {
 
-    serialization {
-        compileClasspath += main.output
-    }
     files {
         compileClasspath += main.output
     }
     utils {
         compileClasspath += main.output
     }
+    serialization {
+        compileClasspath += main.output
+        compileClasspath += utils.output
+        compileClasspath += files.output
+    }
 
     test {
-        compileClasspath += serialization.output
-        runtimeClasspath += serialization.output
-
         compileClasspath += files.output
         runtimeClasspath += files.output
 
         compileClasspath += utils.output
         runtimeClasspath += utils.output
+
+        compileClasspath += serialization.output
+        runtimeClasspath += serialization.output
     }
 
 }
@@ -50,9 +52,9 @@ shadowJar {
     configurations = [project.configurations.shade]
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
-    from sourceSets.serialization.output
     from sourceSets.files.output
     from sourceSets.utils.output
+    from sourceSets.serialization.output
 
     archiveClassifier.set('')
 }

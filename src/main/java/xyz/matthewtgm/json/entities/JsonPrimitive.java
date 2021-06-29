@@ -16,6 +16,10 @@ public class JsonPrimitive extends JsonElement {
         this.value = value;
     }
 
+    public Object getValue() {
+        return value;
+    }
+
     /**
      * @return The same value. (primitives are immutable.)
      */

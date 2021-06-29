@@ -5,7 +5,6 @@ import xyz.matthewtgm.json.entities.JsonElement;
 import xyz.matthewtgm.json.entities.JsonObject;
 import xyz.matthewtgm.json.entities.JsonPrimitive;
 import xyz.matthewtgm.json.exceptions.JsonParseException;
-import xyz.matthewtgm.json.util.Utils;
 
 import java.util.*;
 
@@ -27,10 +26,9 @@ public class JsonParserHelper {
         Map<String, JsonElement> map = new HashMap<>();
         String[] split = input.split(",");
         for (String part : split) {
-            String[] pair = part.split(":");
+            String[] pair = part.replaceAll("\"", "").split(":");
             map.put(pair[0].trim(), new JsonPrimitive(pair[1].trim()));
         }
-        System.out.println("Map: " + map);
         return new JsonObject(map);
     }
 
@@ -40,7 +38,6 @@ public class JsonParserHelper {
         List<JsonElement> list = new ArrayList<>();
         String[] split = input.split(",");
         for (String part : split) list.add(new JsonPrimitive(part.trim()));
-        System.out.println("List: " + list);
         return new JsonArray(list);
     }
 
@@ -137,7 +134,7 @@ public class JsonParserHelper {
             JsonPrimitive v = (JsonPrimitive) entry.getValue();
             sb.append('\"');
             if(k == null) sb.append("null");
-            else Utils.escape(k, sb);
+            else escape(k, sb);
             sb.append('\"');
             sb.append(':');
             sb.append(parsePrimitive(v));

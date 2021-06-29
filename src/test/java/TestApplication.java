@@ -1,13 +1,17 @@
 import xyz.matthewtgm.json.entities.JsonObject;
-import xyz.matthewtgm.json.parser.JsonParser;
+import xyz.matthewtgm.json.files.JsonReader;
+import xyz.matthewtgm.json.files.JsonWriter;
+
+import java.io.File;
 
 public class TestApplication {
 
     public static final TestApplication instance = new TestApplication();
 
     public void start() {
-        System.out.println("Parsed: " + JsonParser.parse(new JsonObject().add("world", "Hello!")));
-        System.out.println(JsonParser.parse("[\"MatthewTGM\", \"Basilicous\", \"Ghqst\"]"));
+        JsonWriter.write("data", new JsonObject().add("Hello", "world!"), new File("./"));
+
+        System.out.println(JsonReader.read("data", new File("./")));
     }
 
 }
