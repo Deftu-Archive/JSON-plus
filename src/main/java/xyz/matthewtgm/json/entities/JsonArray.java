@@ -71,7 +71,7 @@ public class JsonArray extends JsonElement {
     }
 
     public String toString() {
-        return "";
+        return elements.toString();
     }
 
     public boolean equals(Object o) {

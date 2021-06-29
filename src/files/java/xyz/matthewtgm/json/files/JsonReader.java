@@ -1,9 +1,9 @@
 package xyz.matthewtgm.json.files;
 
-import xyz.matthewtgm.json.base.Json;
+/*import xyz.matthewtgm.json.base.Json;
 import xyz.matthewtgm.json.objects.JsonArray;
 import xyz.matthewtgm.json.objects.JsonObject;
-import xyz.matthewtgm.json.parsing.JsonParser;
+import xyz.matthewtgm.json.parsing.JsonParser;*/
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,7 +11,7 @@ import java.io.FileReader;
 
 public class JsonReader {
 
-    public static <K extends String, V> JsonObject<K ,V> readObj(String name, File directory) {
+    /*public static <K extends String, V> JsonObject<K ,V> readObj(String name, File directory) {
         try {
             if (!directory.exists()) directory.mkdirs();
             File file = new File(directory, name + ".json");
@@ -51,6 +51,6 @@ public class JsonReader {
             e.printStackTrace();
             return null;
         }
-    }
+    }*/
 
 }

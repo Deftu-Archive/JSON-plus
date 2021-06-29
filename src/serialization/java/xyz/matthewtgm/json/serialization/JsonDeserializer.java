@@ -2,9 +2,6 @@ package xyz.matthewtgm.json.serialization;
 
 import xyz.matthewtgm.json.serialization.annotations.JsonSerializeExcluded;
 import xyz.matthewtgm.json.serialization.annotations.JsonSerializeName;
-import xyz.matthewtgm.json.objects.JsonArray;
-import xyz.matthewtgm.json.objects.JsonObject;
-import xyz.matthewtgm.json.util.JsonHelper;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -13,7 +10,7 @@ import java.util.Map;
 
 public class JsonDeserializer {
 
-    public static <T> T deserialize(String json, Class<T> type) {
+    /*public static <T> T deserialize(String json, Class<T> type) {
         T value;
         try {
             value = type.newInstance();
@@ -48,6 +45,6 @@ public class JsonDeserializer {
         Field modifiersField = Field.class.getDeclaredField("modifiers");
         modifiersField.setAccessible(true);
         modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-    }
+    }*/
 
 }

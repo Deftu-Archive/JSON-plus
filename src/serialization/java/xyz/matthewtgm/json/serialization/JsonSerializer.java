@@ -3,8 +3,6 @@ package xyz.matthewtgm.json.serialization;
 import xyz.matthewtgm.json.serialization.annotations.JsonSerialize;
 import xyz.matthewtgm.json.serialization.annotations.JsonSerializeExcluded;
 import xyz.matthewtgm.json.serialization.annotations.JsonSerializeName;
-import xyz.matthewtgm.json.files.JsonWriter;
-import xyz.matthewtgm.json.objects.JsonObject;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -12,7 +10,7 @@ import java.lang.reflect.Method;
 
 public class JsonSerializer {
 
-    public static void serialize(Object instance, Class<?> type) {
+    /*public static void serialize(Object instance, Class<?> type) {
         if (type.isAnnotationPresent(JsonSerialize.class)) {
             JsonSerialize serialize = type.getAnnotation(JsonSerialize.class);
             JsonWriter.write(fixFileName(serialize.value()), jsonify(instance, type), parent(new File(serialize.value())), serialize.pretty());
@@ -79,6 +77,6 @@ public class JsonSerializer {
         if (!parent.exists())
             parent.mkdirs();
         return parent;
-    }
+    }*/
 
 }

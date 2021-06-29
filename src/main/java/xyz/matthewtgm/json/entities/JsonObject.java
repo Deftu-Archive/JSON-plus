@@ -77,7 +77,7 @@ public class JsonObject extends JsonElement {
     }
 
     public String toString() {
-        return "";
+        return members.toString();
     }
 
     public boolean equals(Object o) {

@@ -1,45 +1,44 @@
-package xyz.matthewtgm.json.util;
+package xyz.matthewtgm.json.parser;
 
-//import xyz.matthewtgm.json.base.Json;
+import xyz.matthewtgm.json.entities.JsonArray;
+import xyz.matthewtgm.json.entities.JsonObject;
+import xyz.matthewtgm.json.entities.JsonPrimitive;
+import xyz.matthewtgm.json.exceptions.JsonParseException;
+import xyz.matthewtgm.json.util.Utils;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class Utils {
+public class JsonParserHelper {
 
-    public static String toJsonString(Object value) {
-        return toJsonString(value, false);
+    static void throwParseException(Object o) {
+        try {
+            if (o == null) throw new JsonParseException();
+            if (o instanceof Throwable) throw new JsonParseException((Throwable) o);
+            if (o instanceof String) throw new JsonParseException(o.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public static String toJsonString(Object value, boolean log) {
-        if (log) System.out.println(String.format("JsonTGM - Utils#toJsonString#value: (%s | %s)", value, value.getClass().getSimpleName()));
-        if (value == null) return "null";
-        if (value instanceof String) return "\"" + escape((String) value) + "\"";
-        if (value instanceof Double) {
-            if (((Double) value).isInfinite() || ((Double) value).isNaN()) return "null";
-            else return value.toString();
-        }
-        if (value instanceof Float) {
-            if (((Float) value).isInfinite() || ((Float) value).isNaN()) return "null";
-            else return value.toString();
-        }
-        if (value instanceof Number) return value.toString();
-        if (value instanceof Boolean) return value.toString();
-        //if (value instanceof Json) return ((Json) value).toJson();
-        if (value instanceof Map) return toJsonObjectString((Map) value);
-        if (value instanceof List) return toJsonArrayString((List) value);
-        return value.toString();
+    static JsonObject parseObject(String input) {
+        return null;
     }
 
-    public static String escape(String s) {
-        if (s == null) return null;
+    static JsonArray parseArray(String input) {
+        return null;
+    }
+
+    static String escape(String s) {
+        if (s == null)
+            return null;
         StringBuffer sb = new StringBuffer();
         escape(s, sb);
         return sb.toString();
     }
 
-    public static void escape(String s, StringBuffer sb) {
+    static void escape(String s, StringBuffer sb) {
         for (int i = 0; i < s.length(); i++) {
             char ch = s.charAt(i);
             switch (ch) {
@@ -82,8 +81,23 @@ public class Utils {
         }
     }
 
-    private static String toJsonObjectString(Map<?, ?> map) {
-        if (map == null) return "null";
+    static Object parseDecimalNumber(Object val) {
+        try {
+            Float floa = (Float) val;
+            if (floa.isInfinite() || floa.isNaN()) return "null";
+            else return floa.toString();
+        } catch (Exception ignored) {}
+
+        try {
+            Double doub = (Double) val;
+            if (doub.isInfinite() || doub.isNaN()) return "null";
+            else return doub.toString();
+        } catch (Exception ignored) {}
+        return "null";
+    }
+
+    static String createObjectString(Object val) {
+        Map<?, ?> map = (Map<?, ?>) val;
         StringBuffer sb = new StringBuffer();
         boolean first = true;
         Iterator<?> iter = map.entrySet().iterator();
@@ -92,36 +106,34 @@ public class Utils {
             if (first) first = false;
             else sb.append(',');
             Map.Entry<?, ?> entry = (Map.Entry<?, ?>) iter.next();
-            toJsonObjectString(String.valueOf(entry.getKey()), entry.getValue(), sb);
+
+            String k = String.valueOf(entry.getKey());
+            JsonPrimitive v = (JsonPrimitive) entry.getValue();
+            sb.append('\"');
+            if(k == null) sb.append("null");
+            else Utils.escape(k, sb);
+            sb.append('\"').append(':');
+            sb.append(JsonParser.parseJsonPrimitive(v));
         }
         sb.append('}');
         return sb.toString();
     }
 
-    private static String toJsonObjectString(String k, Object v, StringBuffer sb) {
-        sb.append('\"');
-        if(k == null) sb.append("null");
-        else Utils.escape(k, sb);
-        sb.append('\"').append(':');
-        sb.append(toJsonString(v));
-        return sb.toString();
-    }
-
-    private static String toJsonArrayString(List list) {
-        if(list == null) return "null";
+    static String createArrayString(Object val) {
+        List<?> list = (List<?>) val;
         boolean first = true;
-        StringBuffer sb = new StringBuffer();
-        Iterator iter=list.iterator();
+        StringBuilder sb = new StringBuilder();
+        Iterator<?> iter = list.iterator();
         sb.append('[');
-        while(iter.hasNext()){
-            if(first) first = false;
+        while (iter.hasNext()) {
+            if (first) first = false;
             else sb.append(',');
-            Object value=iter.next();
-            if(value == null){
+            Object value = iter.next();
+            if (value == null) {
                 sb.append("null");
                 continue;
             }
-            sb.append(toJsonString(value));
+            sb.append(JsonParser.parseJsonPrimitive(value));
         }
         sb.append(']');
         return sb.toString();

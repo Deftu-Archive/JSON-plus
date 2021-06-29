@@ -1,13 +1,8 @@
 package xyz.matthewtgm.json.util;
 
-import xyz.matthewtgm.json.base.Json;
-import xyz.matthewtgm.json.objects.JsonArray;
-import xyz.matthewtgm.json.objects.JsonObject;
-import xyz.matthewtgm.json.parsing.JsonParser;
-
 public class JsonHelper {
 
-    public static String makePretty(Json object) {
+    /*public static String makePretty(Json object) {
         return GlobalGson.getPrettyGson().toJson(object);
     }
 
@@ -45,6 +40,6 @@ public class JsonHelper {
         } catch (Exception ignored) {}
 
         return value;
-    }
+    }*/
 
 }
