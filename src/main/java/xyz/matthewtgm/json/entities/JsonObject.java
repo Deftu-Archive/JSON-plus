@@ -4,10 +4,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class JsonObject extends JsonElement {
 
-    private final Map<String, JsonElement> members = new HashMap<>();
+    /* Must be concurrent in-case of concurrency. (obviously.) */
+    private final Map<String, JsonElement> members = new ConcurrentHashMap<>();
 
     public JsonObject(JsonObject parent) {
         if (parent == null || parent.members == null) throw new NullPointerException("Parent object is null!");
@@ -86,6 +88,7 @@ public class JsonObject extends JsonElement {
         StringBuilder sb = new StringBuilder();
         boolean first = true;
         Iterator<?> iter = ((Map<?, ?>) this.members).entrySet().iterator();
+
         sb.append('{');
         while (iter.hasNext()) {
             if (first) first = false;
@@ -93,9 +96,10 @@ public class JsonObject extends JsonElement {
             Map.Entry<?, ?> entry = (Map.Entry<?, ?>) iter.next();
 
             String k = String.valueOf(entry.getKey());
-            JsonPrimitive v = (JsonPrimitive) entry.getValue();
+            JsonElement v = (JsonElement) entry.getValue();
             sb.append('\"');
             if(k == null) sb.append("null");
+            sb.append(k);
             sb.append('\"');
             sb.append(':');
             sb.append(v);

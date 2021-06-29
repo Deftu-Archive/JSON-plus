@@ -96,6 +96,7 @@ public class JsonArray extends JsonElement {
         boolean first = true;
         StringBuilder sb = new StringBuilder();
         Iterator<?> iter = ((List<?>) this.elements).iterator();
+
         sb.append('[');
         while (iter.hasNext()) {
             if (first) first = false;

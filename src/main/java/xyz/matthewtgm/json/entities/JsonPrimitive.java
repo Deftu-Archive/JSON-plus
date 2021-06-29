@@ -28,7 +28,8 @@ public class JsonPrimitive extends JsonElement {
     }
 
     public String toString() {
-        return JsonParserHelper.parsePrimitive(value);
+        if(value instanceof String) return "\"" + value + "\"";
+        return value.toString();
     }
 
 }
