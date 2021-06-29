@@ -10,7 +10,7 @@ import java.util.*;
 
 public class JsonParserHelper {
 
-    static void throwParseException(Object o) {
+    public static void throwParseException(Object o) {
         try {
             if (o == null) throw new JsonParseException();
             if (o instanceof Throwable) throw new JsonParseException((Throwable) o);
@@ -20,150 +20,153 @@ public class JsonParserHelper {
         }
     }
 
-    // TODO: 2021/06/29 : Needs work. (has issues with values that contains commas and colons.)
-    static JsonObject parseObject(String input) {
-        input = input.substring(1);
-        input = input.substring(0, input.length() - 1);
-        Map<String, JsonElement> map = new HashMap<>();
-        String[] split = input.split(",");
-        for (String part : split) {
-            String[] pair = part.replaceAll("\"", "").split(":");
-            //System.out.println(Arrays.toString(pair));
-            map.put(pair[0].trim(), new JsonPrimitive(pair[1].trim()));
+    public static JsonElement parse(String input) {
+        input = makeUnpretty(input);
+        if(input.startsWith("{")) {
+            return parseObject(input);
+        } else if(input.startsWith("[")) {
+            return parseArray(input);
+        } else {
+            return parsePrimitive(input);
         }
-        return new JsonObject(map);
     }
 
-    // TODO: 2021/06/29 : Needs work. (has issues with values that contains commas.)
-    static JsonArray parseArray(String input) {
-        input = input.substring(1);
-        input = input.substring(0, input.length() - 1);
-        List<JsonElement> list = new ArrayList<>();
-        String[] split = input.split(",");
-        for (String part : split) list.add(new JsonPrimitive(part.trim()));
-        return new JsonArray(list);
-    }
+    public static JsonObject parseObject(String input) {
+        Map<String, JsonElement> elements = new HashMap<>();
 
-    public static String parsePrimitive(Object val) {
-        if (val == null) val = "null";
-        if (val instanceof String) val = "\"" + JsonParserHelper.escape(val.toString()) + "\"";
-        if (val instanceof Double) val = JsonParserHelper.parseDecimalNumber(val);
-        if (val instanceof Float) val = JsonParserHelper.parseDecimalNumber(val);
-        if (val instanceof Number) val = val.toString();
-        if (val instanceof JsonElement && !(val instanceof JsonPrimitive)) val = val.toString();
-        if (val instanceof Map) val = JsonParser.parse(JsonParserHelper.createObjectString(val), JsonObject.class);
-        if (val instanceof List) val = JsonParser.parse(JsonParserHelper.createArrayString(val), JsonObject.class);
-        return val.toString();
-    }
+        int position = 0;
+        boolean isParsingKey = false;
+        StringBuilder currentKey = new StringBuilder();
+        boolean isParsingElement = false;
+        StringBuilder currentElement = new StringBuilder();
+        boolean isInString = false;
 
-    static String escape(String s) {
-        if (s == null)
-            return null;
-        StringBuffer sb = new StringBuffer();
-        escape(s, sb);
-        return sb.toString();
-    }
+        for(char c : input.toCharArray()) {
+            if(isParsingKey) {
+                currentKey.append(c);
+            }
+            if(isParsingElement) {
+                currentElement.append(c);
+            }
 
-    static void escape(String s, StringBuffer sb) {
-        for (int i = 0; i < s.length(); i++) {
-            char ch = s.charAt(i);
-            switch (ch) {
-                case '"':
-                    sb.append("\\\"");
-                    break;
-                case '\\':
-                    sb.append("\\\\");
-                    break;
-                case '\b':
-                    sb.append("\\b");
-                    break;
-                case '\f':
-                    sb.append("\\f");
-                    break;
-                case '\n':
-                    sb.append("\\n");
-                    break;
-                case '\r':
-                    sb.append("\\r");
-                    break;
-                case '\t':
-                    sb.append("\\t");
-                    break;
-                case '/':
-                    sb.append("\\/");
-                    break;
-                default:
-                    if ((ch >= '\u0000' && ch <= '\u001F') || (ch >= '\u007F' && ch <= '\u009F') || (ch >= '\u2000' && ch <= '\u20FF')) {
-                        String ss = Integer.toHexString(ch);
-                        sb.append("\\u");
-                        for (int k = 0; k < 4 - ss.length(); k++) {
-                            sb.append('0');
-                        }
-                        sb.append(ss.toUpperCase());
-                    } else {
-                        sb.append(ch);
+            boolean submitElement = false;
+            if((c == '{' || c == '[') && !isInString) {
+                position += 1;
+            } else if((c == '}' || c == ']') && !isInString) {
+                position -= 1;
+                if(position == 1 || position == 0) {
+                    submitElement = true;
+                }
+                if(position == 0 && isParsingElement) {
+                    currentElement.deleteCharAt(currentElement.length() - 1);
+                }
+            } else if(c == '"') {
+                if(position == 1) {
+                    if (!isParsingKey && !isParsingElement) {
+                        isParsingKey = true;
+                    } else if (isParsingKey) {
+                        isParsingKey = false;
+                        currentKey.deleteCharAt(currentKey.length() - 1);
                     }
+                }
+                isInString = !isInString;
+            } else if(c == ':' && !isParsingKey && !isParsingElement && !isInString) {
+                if(position == 1) {
+                    isParsingElement = true;
+                }
+            } else if(c == ',' && !isParsingKey && isParsingElement && !isInString) {
+                if(position == 1) {
+                    isParsingElement = false;
+                    submitElement = true;
+                    currentElement.deleteCharAt(currentElement.length() - 1);
+                }
+            }
+
+            if(submitElement) {
+                elements.put(currentKey.toString(), parse(currentElement.toString()));
+                currentKey = new StringBuilder();
+                currentElement = new StringBuilder();
             }
         }
+
+        return new JsonObject(elements);
     }
 
-    static Object parseDecimalNumber(Object val) {
+    public static JsonArray parseArray(String input) {
+        List<JsonElement> elements = new ArrayList<>();
+
+        int position = 0;
+        StringBuilder currentElement = new StringBuilder();
+
+        for(char c : input.toCharArray()) {
+            currentElement.append(c);
+
+            boolean submitElement = false;
+            if(c == '{' || c == '[') {
+                position += 1;
+                if(position == 1) {
+                    currentElement.deleteCharAt(currentElement.length() - 1);
+                }
+            } else if(c == '}' || c == ']') {
+                position -= 1;
+                if(position == 1 || position == 0) {
+                    submitElement = true;
+                }
+                if(position == 0) {
+                    currentElement.deleteCharAt(currentElement.length() - 1);
+                }
+            } else if(c == ',') {
+                if(position == 1) {
+                    submitElement = true;
+                    currentElement.deleteCharAt(currentElement.length() - 1);
+                }
+            }
+
+            if(submitElement) {
+                elements.add(parse(currentElement.toString()));
+                currentElement = new StringBuilder();
+            }
+        }
+
+        return new JsonArray(elements);
+    }
+
+    public static JsonPrimitive parsePrimitive(String input) {
+        Object value = null;
+
+        Object number = parseDecimalNumber(input);
+        if(number != null) {
+            value = number;
+        } else {
+            value = input.substring(0, input.length() - 1);
+        }
+        return new JsonPrimitive(value);
+    }
+
+    private static Object parseDecimalNumber(String input) {
         try {
-            Float floa = (Float) val;
-            if (floa.isInfinite() || floa.isNaN()) return "null";
-            else return floa.toString();
+            return Float.parseFloat(input);
         } catch (Exception ignored) {}
 
         try {
-            Double doub = (Double) val;
-            if (doub.isInfinite() || doub.isNaN()) return "null";
-            else return doub.toString();
+            return Double.parseDouble(input);
         } catch (Exception ignored) {}
-        return "null";
+        return null;
     }
 
-    public static String createObjectString(Object val) {
-        Map<?, ?> map = (Map<?, ?>) val;
-        StringBuffer sb = new StringBuffer();
-        boolean first = true;
-        Iterator<?> iter = map.entrySet().iterator();
-        sb.append('{');
-        while (iter.hasNext()) {
-            if (first) first = false;
-            else sb.append(',');
-            Map.Entry<?, ?> entry = (Map.Entry<?, ?>) iter.next();
-
-            String k = String.valueOf(entry.getKey());
-            JsonPrimitive v = (JsonPrimitive) entry.getValue();
-            sb.append('\"');
-            if(k == null) sb.append("null");
-            else escape(k, sb);
-            sb.append('\"');
-            sb.append(':');
-            sb.append(parsePrimitive(v));
-        }
-        sb.append('}');
-        return sb.toString();
-    }
-
-    public static String createArrayString(Object val) {
-        List<?> list = (List<?>) val;
-        boolean first = true;
-        StringBuilder sb = new StringBuilder();
-        Iterator<?> iter = list.iterator();
-        sb.append('[');
-        while (iter.hasNext()) {
-            if (first) first = false;
-            else sb.append(',');
-            Object value = iter.next();
-            if (value == null) {
-                sb.append("null");
-                continue;
+    private static String makeUnpretty(String json) {
+        StringBuilder result = new StringBuilder();
+        boolean isInQuote = false;
+        for(char c : json.toCharArray()) {
+            if(c == '"') {
+                isInQuote = !isInQuote;
             }
-            sb.append(parsePrimitive(value));
+            if(isInQuote || !(c == '\n' || c == ' ')) {
+                result.append(c);
+            }
         }
-        sb.append(']');
-        return sb.toString();
+
+        return result.toString();
     }
 
 }
