@@ -1,8 +1,8 @@
-package xyz.matthewtgm.json.util;
+package xyz.matthewtgm.json.serialization;
 
-import xyz.matthewtgm.json.annotations.JsonSerialize;
-import xyz.matthewtgm.json.annotations.JsonSerializeExcluded;
-import xyz.matthewtgm.json.annotations.JsonSerializeName;
+import xyz.matthewtgm.json.serialization.annotations.JsonSerialize;
+import xyz.matthewtgm.json.serialization.annotations.JsonSerializeExcluded;
+import xyz.matthewtgm.json.serialization.annotations.JsonSerializeName;
 import xyz.matthewtgm.json.files.JsonWriter;
 import xyz.matthewtgm.json.objects.JsonObject;
 

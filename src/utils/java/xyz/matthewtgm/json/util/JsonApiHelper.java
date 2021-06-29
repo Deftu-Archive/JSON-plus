@@ -32,8 +32,7 @@ public class JsonApiHelper {
         try {
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setRequestMethod("GET");
-            connection.setRequestProperty("User-Agent", "JsonTGM (Mozilla Firefox)");
-
+            if (useAgent) connection.setRequestProperty("User-Agent", "JsonTGM (Mozilla Firefox)");
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder response = new StringBuilder();
             String line;

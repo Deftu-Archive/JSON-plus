@@ -1,9 +1,9 @@
-import xyz.matthewtgm.json.annotations.JsonSerialize;
-import xyz.matthewtgm.json.annotations.JsonSerializeName;
+import xyz.matthewtgm.json.serialization.annotations.JsonSerialize;
+import xyz.matthewtgm.json.serialization.annotations.JsonSerializeName;
 import xyz.matthewtgm.json.objects.JsonArray;
 import xyz.matthewtgm.json.objects.JsonObject;
-import xyz.matthewtgm.json.util.JsonDeserializer;
-import xyz.matthewtgm.json.util.JsonSerializer;
+import xyz.matthewtgm.json.serialization.JsonDeserializer;
+import xyz.matthewtgm.json.serialization.JsonSerializer;
 
 public class TestApplication {
 

@@ -1,9 +1,10 @@
-package xyz.matthewtgm.json.util;
+package xyz.matthewtgm.json.serialization;
 
-import xyz.matthewtgm.json.annotations.JsonSerializeExcluded;
-import xyz.matthewtgm.json.annotations.JsonSerializeName;
+import xyz.matthewtgm.json.serialization.annotations.JsonSerializeExcluded;
+import xyz.matthewtgm.json.serialization.annotations.JsonSerializeName;
 import xyz.matthewtgm.json.objects.JsonArray;
 import xyz.matthewtgm.json.objects.JsonObject;
+import xyz.matthewtgm.json.util.JsonHelper;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;

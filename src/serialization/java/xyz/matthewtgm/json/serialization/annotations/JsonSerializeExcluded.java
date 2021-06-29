@@ -1,4 +1,4 @@
-package xyz.matthewtgm.json.annotations;
+package xyz.matthewtgm.json.serialization.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
