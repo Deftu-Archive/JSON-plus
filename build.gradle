@@ -4,7 +4,9 @@ plugins {
 }
 
 group = 'xyz.matthewtgm.json'
-version = '1.10.1'
+version = '2.0'
+
+sourceCompatibility = targetCompatibility = '1.8'
 
 repositories {
     mavenCentral()
@@ -14,17 +16,48 @@ configurations {
     shade
     implementation.extendsFrom(shade)
     testImplementation.extendsFrom(shade)
+    serializationImplementation.extendsFrom(shade)
+    filesImplementation.extendsFrom(shade)
+    utilsImplementation.extendsFrom(shade)
 }
 
-dependencies {
-    shade('com.google.code.gson:gson:2.8.6')
+dependencies {}
+
+sourceSets {
+
+    files {
+        compileClasspath += main.output
+    }
+    utils {
+        compileClasspath += main.output
+    }
+    serialization {
+        compileClasspath += main.output
+        compileClasspath += utils.output
+        compileClasspath += files.output
+    }
+
+    test {
+        compileClasspath += files.output
+        runtimeClasspath += files.output
+
+        compileClasspath += utils.output
+        runtimeClasspath += utils.output
+
+        compileClasspath += serialization.output
+        runtimeClasspath += serialization.output
+    }
+
 }
 
 shadowJar {
     configurations = [project.configurations.shade]
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    relocate('com.google.gson', 'xyz.matthewtgm.google.gson')
-    exclude('module-info.class')
+
+    from sourceSets.files.output
+    from sourceSets.utils.output
+    from sourceSets.serialization.output
+
     archiveClassifier.set('')
 }
 
