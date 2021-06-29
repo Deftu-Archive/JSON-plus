@@ -9,6 +9,11 @@ import java.util.Map;
 public class Utils {
 
     public static String toJsonString(Object value) {
+        return toJsonString(value, false);
+    }
+
+    public static String toJsonString(Object value, boolean log) {
+        if (log) System.out.println(String.format("JsonTGM - Utils#toJsonString#value: (%s | %s)", value, value.getClass().getSimpleName()));
         if (value == null) return "null";
         if (value instanceof String) return "\"" + escape((String) value) + "\"";
         if (value instanceof Double) {
@@ -21,7 +26,7 @@ public class Utils {
         }
         if (value instanceof Number) return value.toString();
         if (value instanceof Boolean) return value.toString();
-        if ((value instanceof Json)) return ((Json) value).toJson();
+        if (value instanceof Json) return ((Json) value).toJson();
         if (value instanceof Map) return toJsonObjectString((Map) value);
         if (value instanceof List) return toJsonArrayString((List) value);
         return value.toString();

@@ -22,7 +22,7 @@ public class JsonObject<K extends String, V> extends HashMap<K, V> implements Js
      *
      * @return the current object in a proper JSON format
      */
-    public String toJson(Map<K, V> map) {
+    public String toJson(Map<K, V> map, boolean log) {
         if (map == null) return "null";
         StringBuffer sb = new StringBuffer();
         boolean first = true;
@@ -32,7 +32,7 @@ public class JsonObject<K extends String, V> extends HashMap<K, V> implements Js
             if (first) first = false;
             else sb.append(',');
             Map.Entry<?, ?> entry = (Map.Entry<?, ?>) iter.next();
-            toJson(String.valueOf(entry.getKey()), entry.getValue(), sb);
+            toJson(String.valueOf(entry.getKey()), entry.getValue(), sb, log);
         }
         sb.append('}');
         return sb.toString();
@@ -44,18 +44,18 @@ public class JsonObject<K extends String, V> extends HashMap<K, V> implements Js
      * @param sb the string builder to append to.
      * @return the current object in a proper JSON format
      */
-    public String toJson(String k, Object v, StringBuffer sb) {
+    public String toJson(String k, Object v, StringBuffer sb, boolean log) {
         sb.append('\"');
         if (k == null) sb.append("null");
         else Utils.escape(k, sb);
         sb.append('\"').append(':');
-        sb.append(Utils.toJsonString(v));
+        sb.append(Utils.toJsonString(v, log));
         return sb.toString();
     }
 
     @Override
     public String toJson() {
-        return toJson(this);
+        return toJson(this, false);
     }
 
     public JsonObject<K, V> cloneJson() {

@@ -15,7 +15,7 @@ public class JsonArray<T> extends CopyOnWriteArrayList<T> implements Json {
         super(list);
     }
 
-    public String toJson(List<T> list) {
+    public String toJson(List<T> list, boolean log) {
         if (list == null) return "null";
         boolean first = true;
         StringBuilder sb = new StringBuilder();
@@ -29,7 +29,7 @@ public class JsonArray<T> extends CopyOnWriteArrayList<T> implements Json {
                 sb.append("null");
                 continue;
             }
-            sb.append(Utils.toJsonString(value));
+            sb.append(Utils.toJsonString(value, log));
         }
         sb.append(']');
         return sb.toString();
@@ -37,7 +37,7 @@ public class JsonArray<T> extends CopyOnWriteArrayList<T> implements Json {
 
     @Override
     public String toJson() {
-        return toJson(this);
+        return toJson(this, false);
     }
 
     public JsonArray<T> cloneJson() {
