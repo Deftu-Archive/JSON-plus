@@ -1,15 +1,13 @@
 package xyz.matthewtgm.json.entities;
 
-import xyz.matthewtgm.json.parser.JsonParserHelper;
-
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class JsonObject extends JsonElement {
 
-    private final Map<String, JsonElement> members = new ConcurrentHashMap<>();
+    private final Map<String, JsonElement> members = new HashMap<>();
 
     public JsonObject(JsonObject parent) {
         if (parent == null || parent.members == null) throw new NullPointerException("Parent object is null!");
@@ -85,7 +83,25 @@ public class JsonObject extends JsonElement {
     }
 
     public String toString() {
-        return JsonParserHelper.createObjectString(members);
+        StringBuilder sb = new StringBuilder();
+        boolean first = true;
+        Iterator<?> iter = ((Map<?, ?>) this.members).entrySet().iterator();
+        sb.append('{');
+        while (iter.hasNext()) {
+            if (first) first = false;
+            else sb.append(',');
+            Map.Entry<?, ?> entry = (Map.Entry<?, ?>) iter.next();
+
+            String k = String.valueOf(entry.getKey());
+            JsonPrimitive v = (JsonPrimitive) entry.getValue();
+            sb.append('\"');
+            if(k == null) sb.append("null");
+            sb.append('\"');
+            sb.append(':');
+            sb.append(v);
+        }
+        sb.append('}');
+        return sb.toString();
     }
 
     public boolean equals(Object o) {

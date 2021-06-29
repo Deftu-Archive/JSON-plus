@@ -1,5 +1,7 @@
 package xyz.matthewtgm.json.entities;
 
+import xyz.matthewtgm.json.parser.JsonParserHelper;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -91,7 +93,22 @@ public class JsonArray extends JsonElement {
     }
 
     public String toString() {
-        return elements.toString();
+        boolean first = true;
+        StringBuilder sb = new StringBuilder();
+        Iterator<?> iter = ((List<?>) this.elements).iterator();
+        sb.append('[');
+        while (iter.hasNext()) {
+            if (first) first = false;
+            else sb.append(',');
+            Object value = iter.next();
+            if (value == null) {
+                sb.append("null");
+                continue;
+            }
+            sb.append(value);
+        }
+        sb.append(']');
+        return sb.toString();
     }
 
     public boolean equals(Object o) {

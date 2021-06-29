@@ -1,0 +1,14 @@
+{
+  "key": "test-value",
+  "object": {
+    "key": "test"
+  },
+  "array": [
+    {
+      "test": {
+        "key": "value"
+      }
+    },
+    "test1"
+  ]
+}

@@ -6,6 +6,8 @@ plugins {
 group = 'xyz.matthewtgm.json'
 version = '2.0'
 
+sourceCompatibility = targetCompatibility = '1.8'
+
 repositories {
     mavenCentral()
 }
