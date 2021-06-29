@@ -1,7 +1,5 @@
 package xyz.matthewtgm.json.entities;
 
-import xyz.matthewtgm.json.parser.JsonParserHelper;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

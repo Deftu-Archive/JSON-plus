@@ -9,6 +9,15 @@ import java.io.IOException;
 
 public class JsonWriter {
 
+    /**
+     * Writes the JSON element provided to a file.
+     * @param fileName The name of the file. (Excluding the ".json" part.)
+     * @param element The element to write.
+     * @param directory The directory where the file must be written to.
+     * @param pretty Whether or not the written JSON is "pretty".
+     * @author MatthewTGM
+     * @since 2.0
+     */
     public static void write(String fileName, JsonElement element, File directory, boolean pretty) {
         BufferedWriter writer = null;
         try {
@@ -39,10 +48,25 @@ public class JsonWriter {
         }
     }
 
+    /**
+     * Writes the JSON element provided to a file.
+     * @param fileName The name of the file. (Excluding the ".json" part.)
+     * @param element The element to write.
+     * @param directory The directory where the file must be written to.
+     * @author MatthewTGM
+     * @since 2.0
+     */
     public static void write(String fileName, JsonElement element, File directory) {
         write(fileName, element, directory, false);
     }
 
+    /**
+     * @param json The JSON string to prettify.
+     * @param indent The indent level.
+     * @return The prettified JSON string.
+     * @author Danterus
+     * @since 2.0
+     */
     private static String makePretty(String json, int indent) {
         StringBuilder result = new StringBuilder();
         boolean isInQuote = false;
@@ -69,6 +93,12 @@ public class JsonWriter {
         return result.toString();
     }
 
+    /**
+     * @param json The JSON string to unprettify.
+     * @return The unprettified JSON string.
+     * @author Danterus
+     * @since 2.0
+     */
     private static String makeUnpretty(String json) {
         StringBuilder result = new StringBuilder();
         boolean isInQuote = false;

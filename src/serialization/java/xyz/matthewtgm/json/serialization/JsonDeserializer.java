@@ -14,6 +14,13 @@ import java.util.Map;
 
 public class JsonDeserializer {
 
+    /**
+     * @param json The JSON string to get all elements from.
+     * @param type The type of the class.
+     * @return An instance of the class with all of it's respective fields set to the input's elements.
+     * @author MatthewTGM
+     * @since 1.10
+     */
     public static <T> T deserialize(String json, Class<T> type) {
         T value;
         try {
@@ -41,6 +48,13 @@ public class JsonDeserializer {
         return value;
     }
 
+    /**
+     * @param json The JSON to get all elements from.
+     * @param type The type of the class.
+     * @return An instance of the class with all of it's respective fields set to the input's elements.
+     * @author MatthewTGM
+     * @since 1.10
+     */
     public static <T> T deserialize(JsonObject json, Class<T> type) {
         return deserialize(json.toString(), type);
     }

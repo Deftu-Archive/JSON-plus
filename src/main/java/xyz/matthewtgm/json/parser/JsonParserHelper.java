@@ -4,7 +4,6 @@ import xyz.matthewtgm.json.entities.JsonArray;
 import xyz.matthewtgm.json.entities.JsonElement;
 import xyz.matthewtgm.json.entities.JsonObject;
 import xyz.matthewtgm.json.entities.JsonPrimitive;
-import xyz.matthewtgm.json.exceptions.JsonParseException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,19 +12,12 @@ import java.util.Map;
 
 public class JsonParserHelper {
 
-    public static void throwParseException(Object o) {
-        try {
-            if (o == null)
-                throw new JsonParseException();
-            if (o instanceof Throwable)
-                throw new JsonParseException((Throwable) o);
-            if (o instanceof String)
-                throw new JsonParseException(o.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
+    /**
+     * @param input The string to parse.
+     * @return The parsed JSON element.
+     * @author Danterus
+     * @since 2.0
+     */
     public static JsonElement parse(String input) {
         input = makeUnpretty(input);
         if (input.startsWith("{"))
@@ -36,6 +28,12 @@ public class JsonParserHelper {
             return parsePrimitive(input);
     }
 
+    /**
+     * @param input The string to parse.
+     * @return The parsed JSON object.
+     * @author Danterus
+     * @since 2.0
+     */
     public static JsonObject parseObject(String input) {
         Map<String, JsonElement> elements = new HashMap<>();
         int position = 0;
@@ -88,6 +86,12 @@ public class JsonParserHelper {
         return new JsonObject(elements);
     }
 
+    /**
+     * @param input The string to parse.
+     * @return The parsed JSON array.
+     * @author Danterus
+     * @since 2.0
+     */
     public static JsonArray parseArray(String input) {
         List<JsonElement> elements = new ArrayList<>();
         int position = 0;
@@ -120,6 +124,12 @@ public class JsonParserHelper {
         return new JsonArray(elements);
     }
 
+    /**
+     * @param input The string to parse.
+     * @return The parsed JSON primitive.
+     * @author Danterus
+     * @since 2.0
+     */
     public static JsonPrimitive parsePrimitive(String input) {
         Object value = null;
         Object number = parseDecimalNumber(input);
@@ -131,6 +141,12 @@ public class JsonParserHelper {
         return new JsonPrimitive(value);
     }
 
+    /**
+     * @param input The string to parse.
+     * @return The parsed decimal number.
+     * @author MatthewTGM
+     * @since 2.0
+     */
     public static Object parseDecimalNumber(String input) {
         try {
             return Float.parseFloat(input);
@@ -142,6 +158,12 @@ public class JsonParserHelper {
         return null;
     }
 
+    /**
+     * @param json The JSON to unprettify.
+     * @return The unprettified JSON string.
+     * @author Danterus
+     * @since 2.0
+     */
     private static String makeUnpretty(String json) {
         StringBuilder result = new StringBuilder();
         boolean isInQuote = false;

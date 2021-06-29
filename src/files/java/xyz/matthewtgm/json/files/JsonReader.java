@@ -9,8 +9,17 @@ import java.io.FileReader;
 
 public class JsonReader {
 
+    /**
+     * @param name The name of the JSON file. (excluding the ".json" part.)
+     * @param directory The directory where the JSON file is located.
+     * @return The JSON file found in the location provided.
+     * @author MatthewTGM
+     * @since 2.0
+     */
     public static JsonElement read(String name, File directory) {
         try {
+            if (name.endsWith(".json")) name = name.substring(0, name.indexOf(".json"));
+            if (directory == null) directory = new File("./");
             if (!directory.exists()) directory.mkdirs();
             File file = new File(directory, name + ".json");
             BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -21,6 +30,16 @@ public class JsonReader {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     * @param name The name of the JSON file. (excluding the ".json" part.)
+     * @return The JSON file found in the location provided.
+     * @author MatthewTGM
+     * @since 2.0
+     */
+    public static JsonElement read(String name) {
+        return read(name, null);
     }
 
 }

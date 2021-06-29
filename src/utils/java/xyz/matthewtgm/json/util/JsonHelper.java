@@ -5,6 +5,13 @@ import xyz.matthewtgm.json.parser.JsonParser;
 
 public class JsonHelper {
 
+    /**
+     * @param json The JSON string to prettify.
+     * @param indent The indent level.
+     * @return A prettified version of the input JSON.
+     * @author Danterus
+     * @since 2.0
+     */
     public static String makePretty(String json, int indent) {
         StringBuilder result = new StringBuilder();
         boolean isInQuote = false;
@@ -31,10 +38,21 @@ public class JsonHelper {
         return result.toString();
     }
 
+    /**
+     * @param element The JSON element to prettify.
+     * @param indent The indent level.
+     * @return A prettified version of the input JSON.
+     * @author Danterus
+     * @since 2.0
+     */
     public static String makePretty(JsonElement element, int indent) {
         return makePretty(element.toString(), indent);
     }
 
+    /**
+     * @param json The JSON to unprettify.
+     * @return Unprettified JSON.
+     */
     public static String makeUnpretty(String json) {
         StringBuilder result = new StringBuilder();
         boolean isInQuote = false;
@@ -46,6 +64,10 @@ public class JsonHelper {
         return result.toString();
     }
 
+    /**
+     * @param o The object to check for validity.
+     * @return Whether or not the object provided is valid JSON.
+     */
     public static boolean isValidJson(Object o) {
         String str = o.toString();
         boolean valid = false;

@@ -12,6 +12,13 @@ import java.lang.reflect.Method;
 
 public class JsonSerializer {
 
+    /**
+     * Serializes a class to a file.
+     * @param instance An instance of the class.
+     * @param type The type of the class.
+     * @author MatthewTGM
+     * @since 1.9
+     */
     public static void serialize(Object instance, Class<?> type) {
         if (type.isAnnotationPresent(JsonSerialize.class)) {
             JsonSerialize serialize = type.getAnnotation(JsonSerialize.class);
@@ -19,14 +26,33 @@ public class JsonSerializer {
         } else throw new IllegalStateException("The class provided isn't meant to be serialized! ( " + type.getSimpleName() + " )");
     }
 
+    /**
+     * Serializes a class to a file.
+     * @param instance An instance of the class.
+     * @author MatthewTGM
+     * @since 1.9
+     */
     public static void serialize(Object instance) {
         serialize(instance, instance.getClass());
     }
 
+    /**
+     * @param instance An instance of the class.
+     * @param type The type of the class.
+     * @return A JSON object populated by the fields in the class.
+     * @author MatthewTGM
+     * @since 1.9
+     */
     public static JsonObject create(Object instance, Class<?> type) {
         return jsonify(instance, type);
     }
 
+    /**
+     * @param instance An instance of the class.
+     * @return A JSON object populated by the fields in the class.
+     * @author MatthewTGM
+     * @since 1.9
+     */
     public static JsonObject create(Object instance) {
         return create(instance, instance.getClass());
     }
