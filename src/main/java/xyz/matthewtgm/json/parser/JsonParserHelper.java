@@ -28,6 +28,7 @@ public class JsonParserHelper {
         String[] split = input.split(",");
         for (String part : split) {
             String[] pair = part.replaceAll("\"", "").split(":");
+            //System.out.println(Arrays.toString(pair));
             map.put(pair[0].trim(), new JsonPrimitive(pair[1].trim()));
         }
         return new JsonObject(map);

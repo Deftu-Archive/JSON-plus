@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class JsonObject extends JsonElement {
 
-    private final Map<String, JsonElement> members = new ConcurrentHashMap<>();
+    private final Map<String, JsonElement> members = new HashMap<>();
 
     public JsonObject(JsonObject parent) {
         if (parent == null || parent.members == null) throw new NullPointerException("Parent object is null!");
