@@ -3,10 +3,7 @@ package xyz.matthewtgm.json.entities;
 import xyz.matthewtgm.json.parser.JsonParser;
 import xyz.matthewtgm.json.parser.JsonParserHelper;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
 
@@ -77,18 +74,44 @@ public class JsonObject extends JsonElement {
         throw new UnsupportedOperationException("An object can't be a boolean.");
     }
 
+    public boolean isEmpty() {
+        return members.isEmpty();
+    }
+
+    public JsonObject clear() {
+        members.clear();
+        return this;
+    }
+
     public JsonObject add(String key, JsonElement value) {
         members.put(key, value);
         return this;
     }
 
-    public JsonObject remove(String key) {
-        members.remove(key);
+    public JsonObject add(String key, Object value) {
+        return add(key, new JsonPrimitive(value));
+    }
+
+    public JsonObject addIfAbsent(String key, JsonElement value) {
+        members.putIfAbsent(key, new JsonPrimitive(value));
         return this;
     }
 
-    public JsonObject add(String key, Object value) {
-        members.put(key, new JsonPrimitive(value));
+    public JsonObject addIfAbsent(String key, Object value) {
+        return addIfAbsent(key, new JsonPrimitive(value));
+    }
+
+    public JsonObject addAll(Map<String, JsonElement> map) {
+        members.putAll(map);
+        return this;
+    }
+
+    public JsonObject addAll(JsonObject object) {
+        return addAll(object.members);
+    }
+
+    public JsonObject remove(String key) {
+        members.remove(key);
         return this;
     }
 
@@ -98,6 +121,10 @@ public class JsonObject extends JsonElement {
 
     public Set<String> keySet() {
         return members.keySet();
+    }
+
+    public Collection<JsonElement> values() {
+        return members.values();
     }
 
     public int size() {

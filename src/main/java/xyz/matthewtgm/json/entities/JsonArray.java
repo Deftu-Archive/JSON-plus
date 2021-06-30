@@ -4,10 +4,12 @@ import xyz.matthewtgm.json.parser.JsonParser;
 import xyz.matthewtgm.json.parser.JsonParserHelper;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class JsonArray extends JsonElement {
 
@@ -74,6 +76,15 @@ public class JsonArray extends JsonElement {
         throw new UnsupportedOperationException("An array can't be a boolean.");
     }
 
+    public JsonArray clear() {
+        elements.clear();
+        return this;
+    }
+
+    public JsonElement[] toArray() {
+        return elements.toArray(new JsonElement[0]);
+    }
+
     public JsonArray add(Object element) {
         elements.add(new JsonPrimitive(element));
         return this;
@@ -105,7 +116,7 @@ public class JsonArray extends JsonElement {
     }
 
     public JsonArray addAll(JsonArray array) {
-        return addAll(array.elements.toArray(new JsonElement[Integer.MAX_VALUE]));
+        return addAll(array.toArray());
     }
 
     public JsonArray set(int index, JsonElement element) {
@@ -120,6 +131,16 @@ public class JsonArray extends JsonElement {
 
     public JsonArray remove(int index) {
         elements.remove(index);
+        return this;
+    }
+
+    public JsonArray removeIf(Predicate<? super JsonElement> filter) {
+        elements.removeIf(filter);
+        return this;
+    }
+
+    public JsonArray sort(Comparator<? super JsonElement> comparator) {
+        elements.sort(comparator);
         return this;
     }
 
@@ -142,6 +163,14 @@ public class JsonArray extends JsonElement {
     public JsonArray forEach(Consumer<? super JsonElement> function) {
         elements.forEach(function);
         return this;
+    }
+
+    public boolean isEmpty() {
+        return elements.isEmpty();
+    }
+
+    public int indexOf(JsonElement element) {
+        return elements.indexOf(element);
     }
 
     public String toString() {

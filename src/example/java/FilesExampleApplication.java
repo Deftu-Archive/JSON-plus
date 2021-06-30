@@ -11,7 +11,7 @@ public class FilesExampleApplication {
         savedObject.add("data", "data_object");
         JsonWriter.write("saved", savedObject, true);
 
-        System.out.println(JsonReader.read("saved"));
+        System.out.println(JsonReader.read("saved").toString());
     }
 
     public static void main(String[] args) {

@@ -16,7 +16,7 @@ public class JsonReader {
      * @author MatthewTGM
      * @since 2.0
      */
-    public static JsonElement read(String name, File directory) {
+    public static <T> T read(String name, File directory) {
         try {
             if (name.endsWith(".json")) name = name.substring(0, name.indexOf(".json"));
             if (directory == null) directory = new File("./");
@@ -25,7 +25,7 @@ public class JsonReader {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             StringBuilder builder = new StringBuilder();
             reader.lines().forEach(builder::append);
-            return JsonParser.parse(builder.toString());
+            return (T) JsonParser.parse(builder.toString());
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -38,7 +38,7 @@ public class JsonReader {
      * @author MatthewTGM
      * @since 2.0
      */
-    public static JsonElement read(String name) {
+    public static <T> T read(String name) {
         return read(name, null);
     }
 
