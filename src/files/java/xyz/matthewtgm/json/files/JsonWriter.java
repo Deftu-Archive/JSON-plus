@@ -19,6 +19,8 @@ public class JsonWriter {
      * @since 2.0
      */
     public static void write(String fileName, JsonElement element, File directory, boolean pretty) {
+        if (fileName.endsWith(".json")) fileName = fileName.substring(0, fileName.indexOf(".json"));
+        if (directory == null) directory = new File("./");
         BufferedWriter writer = null;
         try {
             if (!directory.exists() && !directory.mkdirs()) throw new IllegalStateException("Directory didn't exist, failed to create it.");
@@ -57,7 +59,29 @@ public class JsonWriter {
      * @since 2.0
      */
     public static void write(String fileName, JsonElement element, File directory) {
-        write(fileName, element, directory, false);
+        write(fileName, element, directory, true);
+    }
+
+    /**
+     * Writes the JSON element provided to a file.
+     * @param fileName The name of the file. (Excluding the ".json" part.)
+     * @param element The element to write.
+     * @author MatthewTGM
+     * @since 2.0
+     */
+    public static void write(String fileName, JsonElement element, boolean pretty) {
+        write(fileName, element, null, pretty);
+    }
+
+    /**
+     * Writes the JSON element provided to a file.
+     * @param fileName The name of the file. (Excluding the ".json" part.)
+     * @param element The element to write.
+     * @author MatthewTGM
+     * @since 2.0
+     */
+    public static void write(String fileName, JsonElement element) {
+        write(fileName, element, null, true);
     }
 
     /**

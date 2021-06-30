@@ -36,6 +36,17 @@ sourceSets {
         compileClasspath += utils.output
         compileClasspath += files.output
     }
+    example {
+        compileClasspath += main.output
+        compileClasspath += utils.output
+        compileClasspath += files.output
+        compileClasspath += serialization.output
+
+        runtimeClasspath += main.output
+        runtimeClasspath += utils.output
+        runtimeClasspath += files.output
+        runtimeClasspath += serialization.output
+    }
 
     test {
         compileClasspath += files.output

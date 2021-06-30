@@ -72,10 +72,10 @@ public class JsonHelper {
         String str = o.toString();
         boolean valid = false;
 
-        try {
-            JsonElement element = JsonParser.parse(str);
-            if (element != null) valid = true;
-        } catch (Exception ignored) {}
+        // TODO: 2021/06/30 : Needs improvement.
+
+        if (str.startsWith("{") && str.endsWith("}")) valid = true;
+        if (str.startsWith("[") && str.endsWith("]")) valid = true;
 
         return valid;
     }
