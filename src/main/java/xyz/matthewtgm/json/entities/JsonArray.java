@@ -6,6 +6,8 @@ import xyz.matthewtgm.json.parser.JsonParserHelper;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class JsonArray extends JsonElement {
 
@@ -135,6 +137,11 @@ public class JsonArray extends JsonElement {
 
     public JsonElement get(int index) {
         return elements.get(index);
+    }
+
+    public JsonArray forEach(Consumer<? super JsonElement> function) {
+        elements.forEach(function);
+        return this;
     }
 
     public String toString() {

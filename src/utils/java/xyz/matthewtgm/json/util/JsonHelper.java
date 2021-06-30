@@ -1,9 +1,65 @@
 package xyz.matthewtgm.json.util;
 
+import xyz.matthewtgm.json.entities.JsonArray;
 import xyz.matthewtgm.json.entities.JsonElement;
-import xyz.matthewtgm.json.parser.JsonParser;
+import xyz.matthewtgm.json.entities.JsonObject;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class JsonHelper {
+
+    public static boolean deepSearchKey(String key, JsonElement element) {
+        if (element instanceof JsonObject) {
+            JsonObject object = (JsonObject) element;
+            AtomicBoolean value = new AtomicBoolean(false);
+            object.forEach((elementKey, objectElement) -> {
+                boolean found = elementKey.equals(key);
+                if (!found && (objectElement instanceof JsonObject || objectElement instanceof JsonArray)) found = deepSearchKey(key, objectElement);
+                value.set(found);
+            });
+            return value.get();
+        }
+        if (element instanceof JsonArray) {
+            JsonArray array = (JsonArray) element;
+            AtomicBoolean value = new AtomicBoolean(false);
+            array.forEach(arrayElement -> {
+                System.out.println(arrayElement);
+                boolean found = arrayElement.getAsString().equals(key);
+                if (!found && (arrayElement instanceof JsonObject || arrayElement instanceof JsonArray)) found = deepSearchKey(key, arrayElement);
+                value.set(found);
+            });
+            return value.get();
+        }
+        return false;
+    }
+
+    public static boolean deepSearchValue(JsonElement value, JsonElement element) {
+        if (element instanceof JsonObject) {
+            JsonObject object = (JsonObject) element;
+            AtomicBoolean returnValue = new AtomicBoolean(false);
+            object.forEach((elementKey, objectElement) -> {
+                boolean found = objectElement.getAsString().equals(value.getAsString());
+                if (!found && (objectElement instanceof JsonObject || objectElement instanceof JsonArray)) found = deepSearchValue(value, objectElement);
+                returnValue.set(found);
+            });
+            return returnValue.get();
+        }
+        if (element instanceof JsonArray) {
+            JsonArray array = (JsonArray) element;
+            AtomicBoolean returnValue = new AtomicBoolean(false);
+            array.forEach(arrayElement -> {
+                boolean found = arrayElement.getAsString().equals(value.getAsString());
+                if (!found && (arrayElement instanceof JsonObject || arrayElement instanceof JsonArray)) found = deepSearchValue(value, arrayElement);
+                returnValue.set(found);
+            });
+            return returnValue.get();
+        }
+        return false;
+    }
+
+    public static boolean deepSearch(Object o, JsonElement element) {
+        return deepSearchKey(o.toString(), element) || deepSearchValue((JsonElement) o, element);
+    }
 
     /**
      * @param json The JSON string to prettify.

@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiConsumer;
 
 public class JsonObject extends JsonElement {
 
@@ -113,6 +114,11 @@ public class JsonObject extends JsonElement {
 
     public boolean has(Object o) {
         return hasKey(o.toString()) || hasValue(new JsonPrimitive(o));
+    }
+
+    public JsonObject forEach(BiConsumer<? super String, ? super JsonElement> function) {
+        members.forEach(function);
+        return this;
     }
 
     public JsonElement get(String key) {
