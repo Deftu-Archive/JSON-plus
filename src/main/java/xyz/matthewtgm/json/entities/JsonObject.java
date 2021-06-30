@@ -1,5 +1,8 @@
 package xyz.matthewtgm.json.entities;
 
+import xyz.matthewtgm.json.parser.JsonParser;
+import xyz.matthewtgm.json.parser.JsonParserHelper;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -27,6 +30,50 @@ public class JsonObject extends JsonElement {
 
     public JsonObject copy() {
         return new JsonObject(this);
+    }
+
+    public JsonObject getAsJsonObject() {
+        return this;
+    }
+
+    public JsonArray getAsJsonArray() {
+        throw new UnsupportedOperationException("An object can't be a JsonArray.");
+    }
+
+    public JsonPrimitive getAsJsonPrimitive() {
+        throw new UnsupportedOperationException("An object can't be a JsonPrimitive.");
+    }
+
+    public long getAsLong() {
+        throw new UnsupportedOperationException("An object can't be a long.");
+    }
+
+    public int getAsInt() {
+        throw new UnsupportedOperationException("An object can't be an int.");
+    }
+
+    public double getAsDouble() {
+        throw new UnsupportedOperationException("An object can't be a double.");
+    }
+
+    public float getAsFloat() {
+        throw new UnsupportedOperationException("An object can't be a float.");
+    }
+
+    public byte getAsByte() {
+        throw new UnsupportedOperationException("An object can't be a byte.");
+    }
+
+    public short getAsShort() {
+        throw new UnsupportedOperationException("An object can't be a short.");
+    }
+
+    public char getAsChar() {
+        throw new UnsupportedOperationException("An object can't be a char.");
+    }
+
+    public boolean getAsBoolean() {
+        throw new UnsupportedOperationException("An object can't be a boolean.");
     }
 
     public JsonObject add(String key, JsonElement value) {
@@ -72,15 +119,15 @@ public class JsonObject extends JsonElement {
         return members.get(key);
     }
 
-    public JsonPrimitive getAsPrimitive(String key) {
+    public JsonPrimitive getPrimitive(String key) {
         return (JsonPrimitive) get(key);
     }
 
-    public JsonArray getAsArray(String key) {
+    public JsonArray getArray(String key) {
         return (JsonArray) get(key);
     }
 
-    public JsonObject getAsObject(String key) {
+    public JsonObject getObject(String key) {
         return (JsonObject) get(key);
     }
 
@@ -102,6 +149,7 @@ public class JsonObject extends JsonElement {
             sb.append(k);
             sb.append('\"');
             sb.append(':');
+            if (JsonParser.getTypeAdapters().containsKey(v.getClass())) v = (JsonElement) JsonParserHelper.deserializeTypeAdapter(JsonParser.getTypeAdapters().get(v.getClass()), this, v.getClass());
             sb.append(v);
         }
         sb.append('}');

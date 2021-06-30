@@ -1,5 +1,8 @@
 package xyz.matthewtgm.json.entities;
 
+import xyz.matthewtgm.json.parser.JsonParser;
+import xyz.matthewtgm.json.parser.JsonParserHelper;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -23,6 +26,50 @@ public class JsonArray extends JsonElement {
 
     public JsonArray copy() {
         return new JsonArray(this);
+    }
+
+    public JsonObject getAsJsonObject() {
+        throw new UnsupportedOperationException("An array can't be a JsonObject.");
+    }
+
+    public JsonArray getAsJsonArray() {
+        return this;
+    }
+
+    public JsonPrimitive getAsJsonPrimitive() {
+        throw new UnsupportedOperationException("An array can't be a JsonPrimitive.");
+    }
+
+    public long getAsLong() {
+        throw new UnsupportedOperationException("An array can't be a long.");
+    }
+
+    public int getAsInt() {
+        throw new UnsupportedOperationException("An array can't be an int.");
+    }
+
+    public double getAsDouble() {
+        throw new UnsupportedOperationException("An array can't be a double.");
+    }
+
+    public float getAsFloat() {
+        throw new UnsupportedOperationException("An array can't be a float.");
+    }
+
+    public byte getAsByte() {
+        throw new UnsupportedOperationException("An array can't be a byte.");
+    }
+
+    public short getAsShort() {
+        throw new UnsupportedOperationException("An array can't be a short.");
+    }
+
+    public char getAsChar() {
+        throw new UnsupportedOperationException("An array can't be a char.");
+    }
+
+    public boolean getAsBoolean() {
+        throw new UnsupportedOperationException("An array can't be a boolean.");
     }
 
     public JsonArray add(Object element) {
@@ -104,6 +151,7 @@ public class JsonArray extends JsonElement {
                 sb.append("null");
                 continue;
             }
+            if (JsonParser.getTypeAdapters().containsKey(value.getClass())) value = JsonParserHelper.deserializeTypeAdapter(JsonParser.getTypeAdapters().get(value.getClass()), this, value.getClass());
             sb.append(value);
         }
         sb.append(']');

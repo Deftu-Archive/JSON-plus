@@ -1,5 +1,6 @@
 package xyz.matthewtgm.json.parser;
 
+import xyz.matthewtgm.json.adaptation.TypeAdapter;
 import xyz.matthewtgm.json.entities.JsonArray;
 import xyz.matthewtgm.json.entities.JsonElement;
 import xyz.matthewtgm.json.entities.JsonObject;
@@ -11,6 +12,17 @@ import java.util.List;
 import java.util.Map;
 
 public class JsonParserHelper {
+
+    private static final Map<Class<?>, TypeAdapter<?>> typeAdapters = new HashMap<>();
+
+    /**
+     * @param typeAdapter The type adapter to be registered.
+     * @author MatthewTGM
+     * @since 2.1
+     */
+    public static void registerTypeAdapter(Class<?> type, TypeAdapter<?> typeAdapter) {
+        typeAdapters.put(type, typeAdapter);
+    }
 
     /**
      * @param input The string to parse.
@@ -130,15 +142,25 @@ public class JsonParserHelper {
      * @author Danterus
      * @since 2.0
      */
-    public static JsonPrimitive parsePrimitive(String input) {
+    public static JsonPrimitive parsePrimitive(Object input) {
+        if (typeAdapters.containsKey(input.getClass())) input = serializeTypeAdapter(typeAdapters.get(input.getClass()), input);
+        String inputStr = input.toString();
         Object value = null;
-        Object number = parseDecimalNumber(input);
+        Object number = parseDecimalNumber(inputStr);
         if (number != null)
             value = number;
-        else if (!input.isEmpty())
-            value = input.substring(1, input.length() - 1);
+        else if (!inputStr.isEmpty())
+            value = inputStr.substring(1, inputStr.length() - 1);
         if (value == null) return new JsonPrimitive("null");
         return new JsonPrimitive(value);
+    }
+
+    public static <T> JsonElement serializeTypeAdapter(TypeAdapter<T> typeAdapter, Object source) {
+        return typeAdapter.serialize((T) source, source.getClass());
+    }
+
+    public static <T> T deserializeTypeAdapter(TypeAdapter<T> typeAdapter, JsonElement element, Class<?> type) {
+        return typeAdapter.deserialize(element, type);
     }
 
     /**
@@ -173,6 +195,15 @@ public class JsonParserHelper {
             if (isInQuote || !(c == '\n' || c == ' ')) result.append(c);
         }
         return result.toString();
+    }
+
+    /**
+     * @return The list of all registered type adapters.
+     * @author MatthewTGM
+     * @since 2.1
+     */
+    public static Map<Class<?>, TypeAdapter<?>> getTypeAdapters() {
+        return typeAdapters;
     }
 
 }
