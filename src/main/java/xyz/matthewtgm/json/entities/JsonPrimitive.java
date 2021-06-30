@@ -1,5 +1,6 @@
 package xyz.matthewtgm.json.entities;
 
+import xyz.matthewtgm.json.parser.JsonParser;
 import xyz.matthewtgm.json.parser.JsonParserHelper;
 
 public class JsonPrimitive extends JsonElement {
@@ -27,11 +28,11 @@ public class JsonPrimitive extends JsonElement {
     }
 
     public JsonObject getAsJsonObject() {
-        throw new UnsupportedOperationException("JSON objects should be gotten or created using the JsonObject class.");
+        return (JsonObject) JsonParser.parse(getAsString());
     }
 
     public JsonArray getAsJsonArray() {
-        throw new UnsupportedOperationException("JSON arrays should be gotten or created using the JsonArray class.");
+        return (JsonArray) JsonParser.parse(getAsString());
     }
 
     public JsonPrimitive getAsJsonPrimitive() {

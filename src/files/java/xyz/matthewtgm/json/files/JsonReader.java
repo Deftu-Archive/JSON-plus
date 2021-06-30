@@ -1,6 +1,5 @@
 package xyz.matthewtgm.json.files;
 
-import xyz.matthewtgm.json.entities.JsonElement;
 import xyz.matthewtgm.json.parser.JsonParser;
 
 import java.io.BufferedReader;

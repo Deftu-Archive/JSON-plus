@@ -46,7 +46,9 @@ public class JsonParserHelper {
      * @author Danterus
      * @since 2.0
      */
-    public static JsonObject parseObject(String input) {
+    public static JsonObject parseObject(Object input) {
+        if (typeAdapters.containsKey(input.getClass())) input = serializeTypeAdapter(typeAdapters.get(input.getClass()), input);
+        String inputStr = input.toString();
         Map<String, JsonElement> elements = new HashMap<>();
         int position = 0;
         boolean isParsingKey = false;
@@ -55,7 +57,7 @@ public class JsonParserHelper {
         StringBuilder currentElement = new StringBuilder();
         boolean isInString = false;
 
-        for (char c : input.toCharArray()) {
+        for (char c : inputStr.toCharArray()) {
             if (isParsingKey)
                 currentKey.append(c);
             if (isParsingElement)
@@ -104,12 +106,14 @@ public class JsonParserHelper {
      * @author Danterus
      * @since 2.0
      */
-    public static JsonArray parseArray(String input) {
+    public static JsonArray parseArray(Object input) {
+        if (typeAdapters.containsKey(input.getClass())) input = serializeTypeAdapter(typeAdapters.get(input.getClass()), input);
+        String inputStr = input.toString();
         List<JsonElement> elements = new ArrayList<>();
         int position = 0;
         StringBuilder currentElement = new StringBuilder();
 
-        for (char c : input.toCharArray()) {
+        for (char c : inputStr.toCharArray()) {
             currentElement.append(c);
             boolean submitElement = false;
             if (c == '{' || c == '[') {

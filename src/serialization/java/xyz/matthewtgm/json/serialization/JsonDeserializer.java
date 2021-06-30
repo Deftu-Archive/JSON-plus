@@ -7,8 +7,10 @@ import xyz.matthewtgm.json.parser.JsonParser;
 import xyz.matthewtgm.json.serialization.annotations.JsonSerializeExcluded;
 import xyz.matthewtgm.json.serialization.annotations.JsonSerializeName;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +26,7 @@ public class JsonDeserializer {
     public static <T> T deserialize(String json, Class<T> type) {
         T value;
         try {
-            value = type.newInstance();
+            value = createClassInstance(type);
             for (Field field : value.getClass().getDeclaredFields()) {
                 field.setAccessible(true);
                 if (field.isAnnotationPresent(JsonSerializeExcluded.class)) continue;
@@ -57,6 +59,13 @@ public class JsonDeserializer {
      */
     public static <T> T deserialize(JsonObject json, Class<T> type) {
         return deserialize(json.toString(), type);
+    }
+
+    private static <T> T createClassInstance(Class<T> clazz) throws Exception {
+        List<Object> parameters = new ArrayList<>();
+        Constructor<T> constructor = (Constructor<T>) clazz.getDeclaredConstructors()[0];
+        for (Class<?> parameterType : constructor.getParameterTypes()) parameters.add(null);
+        return constructor.newInstance(parameters.toArray());
     }
 
     private static void forceNotFinal(Field field) throws Exception {
