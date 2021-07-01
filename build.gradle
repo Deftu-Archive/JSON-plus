@@ -18,7 +18,12 @@ configurations {
     testImplementation.extendsFrom(shade)
 }
 
-dependencies {}
+dependencies {
+    implementation(project(':JsonTGM-Core'))
+    implementation(project(':JsonTGM-Files'))
+    implementation(project(':JsonTGM-Serialization'))
+    implementation(project(':JsonTGM-Utilities'))
+}
 
 shadowJar {
     configurations = [project.configurations.shade]

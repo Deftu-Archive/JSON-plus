@@ -151,12 +151,13 @@ public class JsonParserHelper {
         String inputStr = input.toString();
         Object value = null;
         Object number = parseDecimalNumber(inputStr);
+        System.out.println(input);
+        System.out.println(inputStr);
         if (number != null)
             value = number;
-        else if (!inputStr.isEmpty())
+        else if (!inputStr.isEmpty() && inputStr.startsWith("\"") && inputStr.endsWith("\""))
             value = inputStr.substring(1, inputStr.length() - 1);
-        if (value == null) return new JsonPrimitive("null");
-        return new JsonPrimitive(value);
+        return new JsonPrimitive(value == null ? input : value);
     }
 
     public static <T> JsonElement serializeTypeAdapter(TypeAdapter<T> typeAdapter, Object source) {

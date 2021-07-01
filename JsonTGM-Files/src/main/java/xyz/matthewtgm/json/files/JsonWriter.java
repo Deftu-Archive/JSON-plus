@@ -27,7 +27,7 @@ public class JsonWriter {
             File file = new File(directory, fileName + ".json");
             if (!file.exists() && !file.createNewFile()) throw new IllegalStateException("Failed to create JSON file.");
             writer = new BufferedWriter(new FileWriter(file));
-            writer.write(pretty ? makePretty(element.toString(), 2) : element.toString());
+            writer.write(pretty ? makePretty(element.toString(), 4) : element.toString());
         } catch (Exception e) {
             e.printStackTrace();
             try {
