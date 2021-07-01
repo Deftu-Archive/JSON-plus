@@ -7,3 +7,7 @@ pluginManagement {
 }
 
 rootProject.name = 'JsonTGM'
+include 'JsonTGM-Core'
+include 'JsonTGM-Serialization'
+include 'JsonTGM-Files'
+include 'JsonTGM-Utilities'
