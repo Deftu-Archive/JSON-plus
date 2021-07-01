@@ -1,11 +1,9 @@
 # Gradle
 .gradle
-/build/
-*/build/
+build
 gradle-app.setting
 !gradle-wrapper.jar
 .gradletasknamecache
-
 
 # IntelliJ
 /.idea/
