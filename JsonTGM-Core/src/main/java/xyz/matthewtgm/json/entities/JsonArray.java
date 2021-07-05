@@ -180,7 +180,7 @@ public class JsonArray extends JsonElement implements Iterable<JsonElement> {
                 sb.append("null");
                 continue;
             }
-            if (JsonParser.getTypeAdapters().containsKey(value.getClass())) value = JsonParserHelper.deserializeTypeAdapter(JsonParser.getTypeAdapters().get(value.getClass()), this, value.getClass());
+            if (JsonParser.getTypeAdapters().containsKey(value.getClass())) value = JsonParserHelper.deserializeTypeAdapter(JsonParser.getTypeAdapters().get(value.getClass()), this);
             sb.append(value);
         }
         sb.append(']');

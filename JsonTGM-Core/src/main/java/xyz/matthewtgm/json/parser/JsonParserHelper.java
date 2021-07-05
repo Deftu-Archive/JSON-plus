@@ -6,6 +6,7 @@ import xyz.matthewtgm.json.entities.JsonElement;
 import xyz.matthewtgm.json.entities.JsonObject;
 import xyz.matthewtgm.json.entities.JsonPrimitive;
 
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -127,7 +128,7 @@ public class JsonParserHelper {
                 if (position == 0)
                     currentElement.deleteCharAt(currentElement.length() - 1);
             } else if (c == ',') {
-                if (position == 1) {
+                if (position == 1 || position == 0) {
                     submitElement = true;
                     currentElement.deleteCharAt(currentElement.length() - 1);
                 }
@@ -151,19 +152,21 @@ public class JsonParserHelper {
         String inputStr = input.toString();
         Object value = null;
         Object number = parseDecimalNumber(inputStr);
-        if (number != null)
-            value = number;
-        else if (!inputStr.isEmpty() && inputStr.startsWith("\"") && inputStr.endsWith("\""))
-            value = inputStr.substring(1, inputStr.length() - 1);
+        if (!inputStr.isEmpty()) {
+            if (number != null)
+                value = number;
+            else if (inputStr.startsWith("\"") && inputStr.endsWith("\""))
+                value = inputStr.substring(1, inputStr.length() - 1);
+        }
         return new JsonPrimitive(value == null ? input : value);
     }
 
     public static <T> JsonElement serializeTypeAdapter(TypeAdapter<T> typeAdapter, Object source) {
-        return typeAdapter.serialize((T) source, source.getClass());
+        return typeAdapter.serialize((T) source);
     }
 
-    public static <T> T deserializeTypeAdapter(TypeAdapter<T> typeAdapter, JsonElement element, Class<?> type) {
-        return typeAdapter.deserialize(element, type);
+    public static <T> T deserializeTypeAdapter(TypeAdapter<T> typeAdapter, JsonElement element) {
+        return typeAdapter.deserialize(element);
     }
 
     /**

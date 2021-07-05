@@ -1,5 +1,7 @@
 package xyz.matthewtgm.json.entities;
 
+import xyz.matthewtgm.json.parser.JsonParserHelper;
+
 /**
  * Base class for all JSON elements.
  */

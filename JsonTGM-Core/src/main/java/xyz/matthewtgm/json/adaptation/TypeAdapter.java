@@ -6,7 +6,7 @@ import java.lang.reflect.Type;
 
 public interface TypeAdapter<T> {
 
-    JsonElement serialize(T source, Type type);
-    T deserialize(JsonElement json, Type type);
+    JsonElement serialize(T source);
+    T deserialize(JsonElement json);
 
 }

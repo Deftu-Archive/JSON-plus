@@ -18,6 +18,15 @@ public class JsonParser {
     }
 
     /**
+     * @return The element deserialized to the variable provided.
+     * @author MatthewTGM
+     * @since 2.3
+     */
+    public static <T> T deserialize(Class<T> type, JsonElement element) {
+        return (T) JsonParserHelper.deserializeTypeAdapter(JsonParserHelper.getTypeAdapters().get(type), element);
+    }
+
+    /**
      * @param typeAdapter The type adapter to be registered.
      * @author MatthewTGM
      * @since 2.1
