@@ -16,10 +16,12 @@ import java.util.Map;
 
 public class JsonDeserializer {
 
+    private JsonDeserializer() {}
+
     /**
      * @param json The JSON string to get all elements from.
      * @param type The type of the class.
-     * @return An instance of the class with all of it's respective fields set to the input's elements.
+     * @return An instance of the class with all of its respective fields set to the input's elements.
      * @author MatthewTGM
      * @since 1.10
      */

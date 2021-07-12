@@ -169,19 +169,20 @@ public class JsonArray extends JsonElement implements Iterable<JsonElement> {
     public String getAsString() {
         boolean first = true;
         StringBuilder sb = new StringBuilder();
-        Iterator<?> iter = ((List<?>) this.elements).iterator();
+        Iterator<JsonElement> iterator = iterator();
 
         sb.append('[');
-        while (iter.hasNext()) {
+        while (iterator.hasNext()) {
             if (first) first = false;
             else sb.append(',');
-            Object value = iter.next();
+            JsonElement value = iterator.next();
             if (value == null) {
                 sb.append("null");
                 continue;
             }
-            if (JsonParser.getTypeAdapters().containsKey(value.getClass())) value = JsonParserHelper.deserializeTypeAdapter(JsonParser.getTypeAdapters().get(value.getClass()), this);
-            sb.append(value);
+            if (JsonParser.getTypeAdapters().containsKey(value.getClass()))
+                value = JsonParserHelper.serializeTypeAdapter(JsonParser.getTypeAdapters().get(value.getClass()), value);
+            sb.append(value.getAsString());
         }
         sb.append(']');
         return sb.toString();

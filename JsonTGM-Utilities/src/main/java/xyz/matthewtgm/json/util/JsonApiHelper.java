@@ -11,8 +11,10 @@ import java.net.URL;
 
 public class JsonApiHelper {
 
+    private JsonApiHelper() {}
+
     public static JsonObject getJsonObject(String url, boolean useAgent) {
-        return (JsonObject) JsonParser.parse(getJson(url, useAgent));
+        return JsonParser.parse(getJson(url, useAgent)).getAsJsonObject();
     }
 
     public static JsonObject getJsonObject(String url) {
@@ -20,7 +22,7 @@ public class JsonApiHelper {
     }
 
     public static JsonArray getJsonArray(String url, boolean useAgent) {
-        return (JsonArray) JsonParser.parse(getJson(url, useAgent));
+        return JsonParser.parse(getJson(url, useAgent)).getAsJsonArray();
     }
 
     public static JsonArray getJsonArray(String url) {
@@ -32,7 +34,8 @@ public class JsonApiHelper {
         try {
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setRequestMethod("GET");
-            if (useAgent) connection.setRequestProperty("User-Agent", "JsonTGM (Mozilla Firefox)");
+            if (useAgent)
+                connection.setRequestProperty("User-Agent", "JsonTGM (Mozilla Firefox)");
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder response = new StringBuilder();
             String line;

@@ -3,10 +3,13 @@ package xyz.matthewtgm.json.util;
 import xyz.matthewtgm.json.entities.JsonArray;
 import xyz.matthewtgm.json.entities.JsonElement;
 import xyz.matthewtgm.json.entities.JsonObject;
+import xyz.matthewtgm.json.parser.JsonParser;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class JsonHelper {
+
+    private JsonHelper() {}
 
     public static boolean deepSearchKey(String key, JsonElement element) {
         if (element instanceof JsonObject) {
@@ -124,15 +127,8 @@ public class JsonHelper {
      * @return Whether or not the object provided is valid JSON.
      */
     public static boolean isValidJson(Object o) {
-        String str = o.toString();
-        boolean valid = false;
-
-        // TODO: 2021/06/30 : Needs improvement.
-
-        if (str.startsWith("{") && str.endsWith("}")) valid = true;
-        if (str.startsWith("[") && str.endsWith("]")) valid = true;
-
-        return valid;
+        JsonElement parsed = JsonParser.parse(o.toString());
+        return parsed.isJsonObject() || parsed.isJsonArray();
     }
 
 }

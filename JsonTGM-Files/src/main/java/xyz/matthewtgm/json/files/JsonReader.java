@@ -8,6 +8,8 @@ import java.io.FileReader;
 
 public class JsonReader {
 
+    private JsonReader() {}
+
     /**
      * @param name The name of the JSON file. (excluding the ".json" part.)
      * @param directory The directory where the JSON file is located.

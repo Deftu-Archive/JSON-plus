@@ -9,6 +9,8 @@ import java.io.IOException;
 
 public class JsonWriter {
 
+    private JsonWriter() {}
+
     /**
      * Writes the JSON element provided to a file.
      * @param fileName The name of the file. (Excluding the ".json" part.)
