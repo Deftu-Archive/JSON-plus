@@ -68,7 +68,7 @@ public class JsonParserHelper {
                 position += 1;
             else if ((c == '}' || c == ']') && !isInString) {
                 position -= 1;
-                if (position == 1 || position == 0)
+                if (position == 0)
                     submitElement = true;
                 if (position == 0 && isParsingElement)
                     currentElement.deleteCharAt(currentElement.length() - 1);
@@ -113,25 +113,28 @@ public class JsonParserHelper {
         List<JsonElement> elements = new ArrayList<>();
         int position = 0;
         StringBuilder currentElement = new StringBuilder();
+        boolean isInString = false;
 
         for (char c : inputStr.toCharArray()) {
             currentElement.append(c);
             boolean submitElement = false;
-            if (c == '{' || c == '[') {
+            if ((c == '{' || c == '[') && !isInString) {
                 position += 1;
                 if (position == 1)
                     currentElement.deleteCharAt(currentElement.length() - 1);
-            } else if (c == '}' || c == ']') {
+            } else if ((c == '}' || c == ']') && !isInString) {
                 position -= 1;
                 if (position == 1 || position == 0)
                     submitElement = true;
                 if (position == 0)
                     currentElement.deleteCharAt(currentElement.length() - 1);
-            } else if (c == ',') {
+            } else if (c == ',' && !isInString) {
                 if (position == 1 || position == 0) {
                     submitElement = true;
                     currentElement.deleteCharAt(currentElement.length() - 1);
                 }
+            } else if (c == '"') {
+                isInString = !isInString;
             }
             if (submitElement) {
                 elements.add(parse(currentElement.toString()));
@@ -158,6 +161,10 @@ public class JsonParserHelper {
             else if (inputStr.startsWith("\"") && inputStr.endsWith("\""))
                 value = inputStr.substring(1, inputStr.length() - 1);
         }
+        Boolean bool = parseBoolean(inputStr);
+        if(bool != null) {
+            value = bool;
+        }
         return new JsonPrimitive(value == null ? input : value);
     }
 
@@ -183,6 +190,15 @@ public class JsonParserHelper {
         try {
             return Double.parseDouble(input);
         } catch (Exception ignored) {}
+        return null;
+    }
+
+    public static Boolean parseBoolean(String input) {
+        if(input.equals("true")) {
+            return true;
+        } else if(input.equals("false")) {
+            return false;
+        }
         return null;
     }
 
