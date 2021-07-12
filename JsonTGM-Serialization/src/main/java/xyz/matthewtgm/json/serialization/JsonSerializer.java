@@ -97,7 +97,7 @@ public class JsonSerializer {
     }
 
     private static String fixFileName(String fileName) {
-        if (fileName.endsWith(".xyz.matthewtgm.json")) fileName = fileName.substring(0, fileName.indexOf(".xyz.matthewtgm.json"));
+        if (fileName.endsWith(".json")) fileName = fileName.substring(0, fileName.indexOf(".json"));
         return fileName;
     }
 

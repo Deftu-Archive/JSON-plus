@@ -71,12 +71,11 @@ public class JsonPrimitive extends JsonElement {
     }
 
     public String getAsString() {
-        return value.toString();
-    }
-
-    public String toString() {
         if (value instanceof String) return "\"" + value + "\"";
         return value.toString();
     }
 
+    public String toString() {
+        return value.toString();
+    }
 }

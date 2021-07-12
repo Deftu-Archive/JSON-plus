@@ -9,7 +9,7 @@ import java.io.FileReader;
 public class JsonReader {
 
     /**
-     * @param name The name of the JSON file. (excluding the ".xyz.matthewtgm.json" part.)
+     * @param name The name of the JSON file. (excluding the ".json" part.)
      * @param directory The directory where the JSON file is located.
      * @return The JSON file found in the location provided.
      * @author MatthewTGM
@@ -32,7 +32,7 @@ public class JsonReader {
     }
 
     /**
-     * @param name The name of the JSON file. (excluding the ".xyz.matthewtgm.json" part.)
+     * @param name The name of the JSON file. (excluding the ".json" part.)
      * @return The JSON file found in the location provided.
      * @author MatthewTGM
      * @since 2.0

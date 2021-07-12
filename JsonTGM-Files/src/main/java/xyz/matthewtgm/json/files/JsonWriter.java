@@ -11,7 +11,7 @@ public class JsonWriter {
 
     /**
      * Writes the JSON element provided to a file.
-     * @param fileName The name of the file. (Excluding the ".xyz.matthewtgm.json" part.)
+     * @param fileName The name of the file. (Excluding the ".json" part.)
      * @param element The element to write.
      * @param directory The directory where the file must be written to.
      * @param pretty Whether or not the written JSON is "pretty".
@@ -64,7 +64,7 @@ public class JsonWriter {
 
     /**
      * Writes the JSON element provided to a file.
-     * @param fileName The name of the file. (Excluding the ".xyz.matthewtgm.json" part.)
+     * @param fileName The name of the file. (Excluding the ".json" part.)
      * @param element The element to write.
      * @author MatthewTGM
      * @since 2.0
@@ -75,7 +75,7 @@ public class JsonWriter {
 
     /**
      * Writes the JSON element provided to a file.
-     * @param fileName The name of the file. (Excluding the ".xyz.matthewtgm.json" part.)
+     * @param fileName The name of the file. (Excluding the ".json" part.)
      * @param element The element to write.
      * @author MatthewTGM
      * @since 2.0

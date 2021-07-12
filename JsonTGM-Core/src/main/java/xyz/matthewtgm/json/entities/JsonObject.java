@@ -167,7 +167,7 @@ public class JsonObject extends JsonElement {
         return (JsonObject) get(key);
     }
 
-    public String toString() {
+    public String getAsString() {
         StringBuilder sb = new StringBuilder();
         boolean first = true;
         Iterator<?> iter = ((Map<?, ?>) this.members).entrySet().iterator();

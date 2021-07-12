@@ -1,7 +1,5 @@
 package xyz.matthewtgm.json.entities;
 
-import xyz.matthewtgm.json.parser.JsonParserHelper;
-
 /**
  * Base class for all JSON elements.
  */
@@ -85,8 +83,31 @@ public abstract class JsonElement {
      * @author MatthewTGM
      * @since 2.1
      */
-    public String getAsString() {
-        return toString();
+    public abstract String getAsString();
+
+    /**
+     * @return Whether the element is a JsonObject or not
+     * @author MatthewTGM
+     * @since 2.4
+     */
+    public boolean isJsonObject() {
+        return this instanceof JsonObject;
+    }
+    /**
+     * @return Whether the element is a JsonArray or not
+     * @author MatthewTGM
+     * @since 2.4
+     */
+    public boolean isJsonArray() {
+        return this instanceof JsonArray;
+    }
+    /**
+     * @return Whether the element is a JsonPrimitive or not
+     * @author MatthewTGM
+     * @since 2.4
+     */
+    public boolean isJsonPrimitive() {
+        return this instanceof JsonPrimitive;
     }
 
     /**
@@ -94,6 +115,8 @@ public abstract class JsonElement {
      * @author MatthewTGM
      * @since 2.1
      */
-    public abstract String toString();
+    public String toString() {
+        return getAsString();
+    }
 
 }

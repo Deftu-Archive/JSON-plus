@@ -166,7 +166,7 @@ public class JsonArray extends JsonElement implements Iterable<JsonElement> {
         return elements.indexOf(element);
     }
 
-    public String toString() {
+    public String getAsString() {
         boolean first = true;
         StringBuilder sb = new StringBuilder();
         Iterator<?> iter = ((List<?>) this.elements).iterator();
