@@ -48,7 +48,8 @@ public class JsonParserHelper {
      * @since 2.0
      */
     public static JsonObject parseObject(Object input) {
-        if (typeAdapters.containsKey(input.getClass())) input = serializeTypeAdapter(typeAdapters.get(input.getClass()), input);
+        if (typeAdapters.containsKey(input.getClass()))
+            input = serializeTypeAdapter(typeAdapters.get(input.getClass()), input);
         String inputStr = input.toString();
         Map<String, JsonElement> elements = new HashMap<>();
         int position = 0;
@@ -183,6 +184,10 @@ public class JsonParserHelper {
      * @since 2.0
      */
     public static Object parseDecimalNumber(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (Exception ignored) {}
+
         try {
             return Float.parseFloat(input);
         } catch (Exception ignored) {}

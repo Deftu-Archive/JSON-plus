@@ -1,5 +1,11 @@
 {
-  "triggers": [
-    "^ +1st Killer - ?\\[?\\w*\\+*\\]? \\w+ - \\d+(?: Kills?)?$"
-  ]
+    "boolean": false,
+    "string": "I'm a string!",
+    "byte": 5,
+    "double": 0.3,
+    "char": "c",
+    "short": 32,
+    "integer": 1,
+    "float": 4.2,
+    "long": 678945678045678923
 }

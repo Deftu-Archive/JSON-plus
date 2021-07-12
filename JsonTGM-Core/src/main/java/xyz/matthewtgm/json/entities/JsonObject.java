@@ -90,8 +90,8 @@ public class JsonObject extends JsonElement {
 
     public JsonObject add(String key, Object value) {
         JsonElement add = new JsonPrimitive(value);
-        if (JsonParser.getTypeAdapters().containsKey(value.getClass())) add = JsonParserHelper.serializeTypeAdapter(JsonParser.getTypeAdapters().get(value.getClass()), value);
-        System.out.println("Add 2: " + add);
+        if (JsonParser.getTypeAdapters().containsKey(value.getClass()))
+            add = JsonParserHelper.serializeTypeAdapter(JsonParser.getTypeAdapters().get(value.getClass()), value);
         return add(key, add);
     }
 
@@ -186,7 +186,7 @@ public class JsonObject extends JsonElement {
             sb.append('\"');
             sb.append(':');
             if (JsonParser.getTypeAdapters().containsKey(v.getClass())) v = (JsonElement) JsonParserHelper.deserializeTypeAdapter(JsonParser.getTypeAdapters().get(v.getClass()), this);
-            sb.append(v);
+            sb.append(v.getAsString());
         }
         sb.append('}');
         return sb.toString();

@@ -23,7 +23,6 @@ public class JsonHelper {
             JsonArray array = (JsonArray) element;
             AtomicBoolean value = new AtomicBoolean(false);
             array.forEach(arrayElement -> {
-                System.out.println(arrayElement);
                 boolean found = arrayElement.getAsString().equals(key);
                 if (!found && (arrayElement instanceof JsonObject || arrayElement instanceof JsonArray)) found = deepSearchKey(key, arrayElement);
                 value.set(found);
