@@ -6,8 +6,9 @@ public class JsonPrimitive extends JsonElement {
 
     private final Object value;
 
-    public JsonPrimitive(final Object value) {
-        if (value == null) throw new NullPointerException("Primitive value can't be null!");
+    public JsonPrimitive(Object value) {
+        if (value == null)
+            throw new NullPointerException("Primitive value can't be null!");
         this.value = value;
     }
 

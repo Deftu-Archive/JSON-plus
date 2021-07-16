@@ -1,9 +1,11 @@
+import xyz.matthewtgm.json.entities.JsonObject;
+
 public class TestApplication {
 
     public static TestApplication instance = new TestApplication();
 
     public void start() {
-        /*JsonObject object = new JsonObject();
+        JsonObject object = new JsonObject();
         object.add("integer", 1);
         object.add("boolean", false);
         object.add("double", 0.3d);
@@ -14,8 +16,7 @@ public class TestApplication {
         object.add("char", 'c');
         object.add("string", "I'm a string!");
 
-        System.out.println(object);
-        JsonWriter.write("test", object);*/
+        System.out.println(object.get("long").isLong());
     }
 
 }

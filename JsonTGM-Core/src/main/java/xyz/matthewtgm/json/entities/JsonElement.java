@@ -109,6 +109,78 @@ public abstract class JsonElement {
     public boolean isJsonPrimitive() {
         return this instanceof JsonPrimitive;
     }
+    /**
+     * @return Whether the element is a JsonPrimitive or not
+     * @author MatthewTGM
+     * @since 2.6
+     */
+    public boolean isLong() {
+        return isJsonPrimitive() && (getAsJsonPrimitive()).getValue() instanceof Long;
+    }
+    /**
+     * @return Whether the element is a int or not
+     * @author MatthewTGM
+     * @since 2.6
+     */
+    public boolean isInt() {
+        return isJsonPrimitive() && (getAsJsonPrimitive()).getValue() instanceof Integer;
+    }
+    /**
+     * @return Whether the element is a double or not
+     * @author MatthewTGM
+     * @since 2.6
+     */
+    public boolean isDouble() {
+        return isJsonPrimitive() && (getAsJsonPrimitive()).getValue() instanceof Double;
+    }
+    /**
+     * @return Whether the element is a float or not
+     * @author MatthewTGM
+     * @since 2.6
+     */
+    public boolean isFloat() {
+        return isJsonPrimitive() && (getAsJsonPrimitive()).getValue() instanceof Float;
+    }
+    /**
+     * @return Whether the element is a byte or not
+     * @author MatthewTGM
+     * @since 2.6
+     */
+    public boolean isByte() {
+        return isJsonPrimitive() && (getAsJsonPrimitive()).getValue() instanceof Byte;
+    }
+    /**
+     * @return Whether the element is a short or not
+     * @author MatthewTGM
+     * @since 2.6
+     */
+    public boolean isShort() {
+        return isJsonPrimitive() && (getAsJsonPrimitive()).getValue() instanceof Short;
+    }
+    /**
+     * @return Whether the element is a char or not
+     * @author MatthewTGM
+     * @since 2.6
+     */
+    public boolean isChar() {
+        return isJsonPrimitive() && (getAsJsonPrimitive()).getValue() instanceof Character;
+    }
+    /**
+     * @return Whether the element is a boolean or not
+     * @author MatthewTGM
+     * @since 2.6
+     */
+    public boolean isBoolean() {
+        return isJsonPrimitive() && (getAsJsonPrimitive()).getValue() instanceof Boolean;
+    }
+    /**
+     * @return Whether the element is a String or not
+     * @author MatthewTGM
+     * @since 2.6
+     */
+    public boolean isString() {
+        return isJsonPrimitive() && (getAsJsonPrimitive()).getValue() instanceof String;
+    }
 
     /**
      * @return A String representation of the element.
