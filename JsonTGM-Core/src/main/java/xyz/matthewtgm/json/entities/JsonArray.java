@@ -142,8 +142,17 @@ public class JsonArray extends JsonElement implements Iterable<JsonElement> {
         return this;
     }
 
+    @Deprecated
     public boolean contains(JsonElement element) {
         return elements.contains(element);
+    }
+
+    public boolean has(JsonElement element) {
+        return elements.contains(element);
+    }
+
+    public boolean has(Object o) {
+        return elements.stream().anyMatch(element -> element.isJsonPrimitive() && o != null && ((element.getAsJsonPrimitive().getValue() == o || element.getAsJsonPrimitive().getValue().equals(o)) || element.getAsJsonPrimitive().getValue().toString().equals(o.toString())));
     }
 
     public int size() {
