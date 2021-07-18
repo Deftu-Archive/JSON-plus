@@ -182,7 +182,8 @@ public class JsonArray extends JsonElement implements Iterable<JsonElement> {
 
         sb.append('[');
         while (iterator.hasNext()) {
-            if (first) first = false;
+            if (first)
+                first = false;
             else sb.append(',');
             JsonElement value = iterator.next();
             if (value == null) {
@@ -195,6 +196,10 @@ public class JsonArray extends JsonElement implements Iterable<JsonElement> {
         }
         sb.append(']');
         return sb.toString();
+    }
+
+    public String getAsString(boolean formatted) {
+        return getAsString();
     }
 
     public boolean equals(Object o) {

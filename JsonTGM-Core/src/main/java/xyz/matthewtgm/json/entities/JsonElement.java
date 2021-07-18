@@ -84,6 +84,12 @@ public abstract class JsonElement {
      * @since 2.1
      */
     public abstract String getAsString();
+    /**
+     * @return The element as a "formatted" String.
+     * @author MatthewTGM
+     * @since 2.6.2
+     */
+    public abstract String getAsString(boolean formatted);
 
     /**
      * @return Whether the element is a JsonObject or not

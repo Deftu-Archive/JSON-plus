@@ -72,8 +72,13 @@ public class JsonPrimitive extends JsonElement {
     }
 
     public String getAsString() {
-        if (value instanceof String || value instanceof Character) return "\"" + value + "\"";
-        return value.toString();
+        return getAsString(false);
+    }
+
+    public String getAsString(boolean formatted) {
+        if (formatted && value instanceof String || value instanceof Character)
+            return "\"" + value + "\"";
+        return toString();
     }
 
     public String toString() {

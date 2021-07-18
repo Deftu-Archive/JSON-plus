@@ -181,15 +181,21 @@ public class JsonObject extends JsonElement {
             String k = String.valueOf(entry.getKey());
             JsonElement v = (JsonElement) entry.getValue();
             sb.append('\"');
-            if(k == null) sb.append("null");
+            if(k == null)
+                sb.append("null");
             sb.append(k);
             sb.append('\"');
             sb.append(':');
-            if (JsonParser.getTypeAdapters().containsKey(v.getClass())) v = (JsonElement) JsonParserHelper.deserializeTypeAdapter(JsonParser.getTypeAdapters().get(v.getClass()), this);
+            if (JsonParser.getTypeAdapters().containsKey(v.getClass()))
+                v = JsonParserHelper.serializeTypeAdapter(JsonParser.getTypeAdapters().get(v.getClass()), this);
             sb.append(v.getAsString());
         }
         sb.append('}');
         return sb.toString();
+    }
+
+    public String getAsString(boolean formatted) {
+        return getAsString();
     }
 
     public boolean equals(Object o) {
