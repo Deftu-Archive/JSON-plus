@@ -188,7 +188,7 @@ public class JsonObject extends JsonElement {
             sb.append(':');
             if (JsonParser.getTypeAdapters().containsKey(v.getClass()))
                 v = JsonParserHelper.serializeTypeAdapter(JsonParser.getTypeAdapters().get(v.getClass()), this);
-            sb.append(v.getAsString());
+            sb.append(v.getAsString(true));
         }
         sb.append('}');
         return sb.toString();

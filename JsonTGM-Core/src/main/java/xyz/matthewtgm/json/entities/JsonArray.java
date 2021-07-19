@@ -3,10 +3,7 @@ package xyz.matthewtgm.json.entities;
 import xyz.matthewtgm.json.parser.JsonParser;
 import xyz.matthewtgm.json.parser.JsonParserHelper;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.function.Predicate;
 
 public class JsonArray extends JsonElement implements Iterable<JsonElement> {
@@ -152,7 +149,17 @@ public class JsonArray extends JsonElement implements Iterable<JsonElement> {
     }
 
     public boolean has(Object o) {
-        return elements.stream().anyMatch(element -> element.isJsonPrimitive() && o != null && ((element.getAsJsonPrimitive().getValue() == o || element.getAsJsonPrimitive().getValue().equals(o)) || element.getAsJsonPrimitive().getValue().toString().equals(o.toString())));
+        o = Objects.requireNonNull(o);
+        for (JsonElement element : this) {
+            if (!element.isJsonPrimitive())
+                continue;
+
+            Object value = element.getAsJsonPrimitive().getValue();
+
+            if (o.equals(value) || o.toString().equals(value.toString()))
+                return true;
+        }
+        return false;
     }
 
     public int size() {
@@ -192,7 +199,7 @@ public class JsonArray extends JsonElement implements Iterable<JsonElement> {
             }
             if (JsonParser.getTypeAdapters().containsKey(value.getClass()))
                 value = JsonParserHelper.serializeTypeAdapter(JsonParser.getTypeAdapters().get(value.getClass()), value);
-            sb.append(value.getAsString());
+            sb.append(value.getAsString(true));
         }
         sb.append(']');
         return sb.toString();
