@@ -155,16 +155,24 @@ public class JsonObject extends JsonElement {
         return members.get(key);
     }
 
+    public JsonElement getOrDefault(String key, JsonElement defaultValue) {
+        return hasKey(key) ? get(key) : defaultValue;
+    }
+
+    public JsonElement getOrDefault(String key, Object defaultValue) {
+        return getOrDefault(key, JsonParser.parse(Objects.requireNonNull(defaultValue).toString()));
+    }
+
     public JsonPrimitive getPrimitive(String key) {
-        return (JsonPrimitive) get(key);
+        return get(key).getAsJsonPrimitive();
     }
 
     public JsonArray getArray(String key) {
-        return (JsonArray) get(key);
+        return get(key).getAsJsonArray();
     }
 
     public JsonObject getObject(String key) {
-        return (JsonObject) get(key);
+        return get(key).getAsJsonObject();
     }
 
     public String getAsString() {

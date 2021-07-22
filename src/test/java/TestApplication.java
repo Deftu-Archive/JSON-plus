@@ -7,11 +7,10 @@ public class TestApplication {
     public static TestApplication instance = new TestApplication();
 
     public void start() {
-        JsonArray array = new JsonArray();
-        array.add("gaming");
-
-        System.out.println(array.has("gaming"));
-        System.out.println(array.has("not_gaming"));
+        JsonObject object = new JsonObject();
+        System.out.println(object.getOrDefault("gamer", "gaming!"));
+        object.add("gamer", "ez");
+        System.out.println(object.getOrDefault("gamer", ":("));
     }
 
 }

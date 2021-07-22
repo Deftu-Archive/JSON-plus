@@ -2,7 +2,7 @@ package xyz.matthewtgm.json;
 
 public class JsonVersion {
 
-    public static final JsonVersion CURRENT = new JsonVersion(2, 6, 3);
+    public static final JsonVersion CURRENT = new JsonVersion(2, 7, 0);
 
     public final int major;
     public final int minor;
