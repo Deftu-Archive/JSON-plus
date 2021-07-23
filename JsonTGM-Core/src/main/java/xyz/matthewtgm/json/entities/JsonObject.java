@@ -6,6 +6,8 @@ import xyz.matthewtgm.json.parser.JsonParserHelper;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public class JsonObject extends JsonElement {
 
@@ -146,8 +148,25 @@ public class JsonObject extends JsonElement {
         return hasKey(o.toString()) || hasValue(new JsonPrimitive(o));
     }
 
+    public JsonObject merge(JsonObject object, boolean maintainCurrent) {
+        for (Map.Entry<String, JsonElement> entry : object.members.entrySet())
+            if (members.containsKey(entry.getKey()) && !maintainCurrent)
+                members.put(entry.getKey(), entry.getValue());
+        return this;
+    }
+
     public JsonObject forEach(BiConsumer<? super String, ? super JsonElement> function) {
         members.forEach(function);
+        return this;
+    }
+
+    public JsonObject compute(String key, BiFunction<? super String, ? super JsonElement, ? extends JsonElement> function) {
+        members.compute(key, function);
+        return this;
+    }
+
+    public JsonObject computeIfAbsent(String key, Function<? super String, ? extends JsonElement> function) {
+        members.computeIfAbsent(key, function);
         return this;
     }
 
@@ -163,14 +182,65 @@ public class JsonObject extends JsonElement {
         return getOrDefault(key, JsonParser.parse(Objects.requireNonNull(defaultValue).toString()));
     }
 
+    public long getAsLong(String key) {
+        return get(key).getAsLong();
+    }
+
+    public int getAsInt(String key) {
+        return get(key).getAsInt();
+    }
+
+    public double getAsDouble(String key) {
+        return get(key).getAsDouble();
+    }
+
+    public float getAsFloat(String key) {
+         return get(key).getAsFloat();
+    }
+
+    public byte getAsByte(String key) {
+        return get(key).getAsByte();
+    }
+
+    public short getAsShort(String key) {
+        return get(key).getAsShort();
+    }
+
+    public char getAsChar(String key) {
+        return get(key).getAsChar();
+    }
+
+    public boolean getAsBoolean(String key) {
+        return get(key).getAsBoolean();
+    }
+
+    public String getAsString(String key) {
+        return get(key).getAsString();
+    }
+
+    public JsonPrimitive getAsPrimitive(String key) {
+        return get(key).getAsJsonPrimitive();
+    }
+
+    public JsonArray getAsArray(String key) {
+        return get(key).getAsJsonArray();
+    }
+
+    public JsonObject getAsObject(String key) {
+        return get(key).getAsJsonObject();
+    }
+
+    @Deprecated
     public JsonPrimitive getPrimitive(String key) {
         return get(key).getAsJsonPrimitive();
     }
 
+    @Deprecated
     public JsonArray getArray(String key) {
         return get(key).getAsJsonArray();
     }
 
+    @Deprecated
     public JsonObject getObject(String key) {
         return get(key).getAsJsonObject();
     }

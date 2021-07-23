@@ -153,9 +153,7 @@ public class JsonArray extends JsonElement implements Iterable<JsonElement> {
         for (JsonElement element : this) {
             if (!element.isJsonPrimitive())
                 continue;
-
             Object value = element.getAsJsonPrimitive().getValue();
-
             if (o.equals(value) || o.toString().equals(value.toString()))
                 return true;
         }
@@ -172,6 +170,54 @@ public class JsonArray extends JsonElement implements Iterable<JsonElement> {
 
     public JsonElement get(int index) {
         return elements.get(index);
+    }
+
+    public long getAsLong(int index) {
+        return get(index).getAsLong();
+    }
+
+    public int getAsInt(int index) {
+        return get(index).getAsInt();
+    }
+
+    public double getAsDouble(int index) {
+        return get(index).getAsDouble();
+    }
+
+    public float getAsFloat(int index) {
+        return get(index).getAsFloat();
+    }
+
+    public byte getAsByte(int index) {
+        return get(index).getAsByte();
+    }
+
+    public short getAsShort(int index) {
+        return get(index).getAsShort();
+    }
+
+    public char getAsChar(int index) {
+        return get(index).getAsChar();
+    }
+
+    public boolean getAsBoolean(int index) {
+        return get(index).getAsBoolean();
+    }
+
+    public String getAsString(int index) {
+        return get(index).getAsString();
+    }
+
+    public JsonPrimitive getAsJsonPrimitive(int index) {
+        return get(index).getAsJsonPrimitive();
+    }
+
+    public JsonArray getAsJsonArray(int index) {
+        return get(index).getAsJsonArray();
+    }
+
+    public JsonObject getAsJsonObject(int index) {
+        return get(index).getAsJsonObject();
     }
 
     public boolean isEmpty() {

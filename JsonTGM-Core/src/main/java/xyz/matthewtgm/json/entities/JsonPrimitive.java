@@ -28,11 +28,11 @@ public class JsonPrimitive extends JsonElement {
     }
 
     public JsonObject getAsJsonObject() {
-        return (JsonObject) JsonParser.parse(toString());
+        return JsonParser.parse(getAsString()).getAsJsonObject();
     }
 
     public JsonArray getAsJsonArray() {
-        return (JsonArray) JsonParser.parse(toString());
+        return JsonParser.parse(getAsString()).getAsJsonArray();
     }
 
     public JsonPrimitive getAsJsonPrimitive() {
@@ -40,35 +40,35 @@ public class JsonPrimitive extends JsonElement {
     }
 
     public long getAsLong() {
-        return Long.parseLong(toString());
+        return Long.parseLong(getAsString());
     }
 
     public int getAsInt() {
-        return Integer.parseInt(toString());
+        return Integer.parseInt(getAsString());
     }
 
     public double getAsDouble() {
-        return Double.parseDouble(toString());
+        return Double.parseDouble(getAsString());
     }
 
     public float getAsFloat() {
-        return Float.parseFloat(toString());
+        return Float.parseFloat(getAsString());
     }
 
     public byte getAsByte() {
-        return Byte.parseByte(toString());
+        return Byte.parseByte(getAsString());
     }
 
     public short getAsShort() {
-        return Short.parseShort(toString());
+        return Short.parseShort(getAsString());
     }
 
     public char getAsChar() {
-        return toString().charAt(0);
+        return getAsString().charAt(0);
     }
 
     public boolean getAsBoolean() {
-        return Boolean.parseBoolean(toString());
+        return Boolean.parseBoolean(getAsString());
     }
 
     public String getAsString() {

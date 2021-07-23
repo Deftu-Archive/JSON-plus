@@ -9,6 +9,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class JsonHelper {
 
+    public static int DEFAULT_INDENT = 4;
+
     private JsonHelper() {}
 
     public static boolean deepSearchKey(String key, JsonElement element) {
@@ -105,6 +107,26 @@ public class JsonHelper {
      */
     public static String makePretty(JsonElement element, int indent) {
         return makePretty(element.toString(), indent);
+    }
+
+    /**
+     * @param json The JSON string to prettify.
+     * @return A prettified version of the input JSON.
+     * @author MatthewTGM
+     * @since 2.8
+     */
+    public static String makePretty(String json) {
+        return makePretty(json, DEFAULT_INDENT);
+    }
+
+    /**
+     * @param element The JSON element to prettify.
+     * @return A prettified version of the input JSON.
+     * @author MatthewTGM
+     * @since 2.8
+     */
+    public static String makePretty(JsonElement element) {
+        return makePretty(element, DEFAULT_INDENT);
     }
 
     /**
