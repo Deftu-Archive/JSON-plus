@@ -90,7 +90,14 @@ public abstract class JsonElement {
      * @since 2.6.2
      */
     public abstract String getAsString(boolean formatted);
-
+    /**
+     * @return Whether this element is concurrent or not.
+     * @author MatthewTGM
+     * @since 2.9.0
+     */
+    public boolean isConcurrent() {
+        return this instanceof ConcurrentJsonObject || this instanceof CopyOnWriteJsonArray;
+    }
     /**
      * @return Whether the element is a JsonObject or not
      * @author MatthewTGM

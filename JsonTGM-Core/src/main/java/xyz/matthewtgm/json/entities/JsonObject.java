@@ -4,18 +4,17 @@ import xyz.matthewtgm.json.parser.JsonParser;
 import xyz.matthewtgm.json.parser.JsonParserHelper;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class JsonObject extends JsonElement {
 
-    /* Must be concurrent in-case of concurrency. (obviously.) */
-    private final Map<String, JsonElement> members = new ConcurrentHashMap<>();
+    protected Map<String, JsonElement> members = new HashMap<>();
 
     public JsonObject(JsonObject parent) {
-        if (parent == null || parent.members == null) throw new NullPointerException("Parent object is null!");
+        if (parent == null || parent.members == null)
+            throw new NullPointerException("Parent object is null!");
         members.putAll(parent.members);
     }
 

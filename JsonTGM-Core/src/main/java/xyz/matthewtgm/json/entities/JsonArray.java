@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 
 public class JsonArray extends JsonElement implements Iterable<JsonElement> {
 
-    private final List<JsonElement> elements = new ArrayList<>();
+    protected List<JsonElement> elements = new ArrayList<>();
 
     public JsonArray(JsonArray parent) {
         if (parent == null || parent.elements == null) throw new NullPointerException("Parent is null!");
