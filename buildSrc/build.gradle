@@ -1,5 +1,0 @@
-plugins {
-    id 'java'
-}
-
-sourceCompatibility = targetCompatibility = '1.8'

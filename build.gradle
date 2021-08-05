@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.5.21'
     id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
@@ -23,6 +24,8 @@ dependencies {
     implementation(project(':JsonTGM-Files'))
     implementation(project(':JsonTGM-Serialization'))
     implementation(project(':JsonTGM-Utilities'))
+
+    implementation(project(':JsonTGM-Kotlin'))
 }
 
 shadowJar {

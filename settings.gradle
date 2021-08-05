@@ -12,4 +12,5 @@ include 'JsonTGM-Serialization'
 include 'JsonTGM-Files'
 include 'JsonTGM-Utilities'
 include 'JsonTGM-Kotlin'
+include 'JsonTGM-Kotlin'
 
