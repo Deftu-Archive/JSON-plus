@@ -1,5 +1,9 @@
 package xyz.matthewtgm.json.entities;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Base class for all JSON elements.
  */
@@ -193,6 +197,37 @@ public abstract class JsonElement {
      */
     public boolean isString() {
         return isJsonPrimitive() && (getAsJsonPrimitive()).getValue() instanceof String;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T extends JsonElement> T fromRef(Object ref) {
+        if (
+                   ref instanceof Long
+                || ref instanceof Integer
+                || ref instanceof Double
+                || ref instanceof Float
+                || ref instanceof Byte
+                || ref instanceof Short
+                || ref instanceof Character
+                || ref instanceof Boolean
+                || ref instanceof String) {
+            return (T) new JsonPrimitive(ref);
+        }
+
+        if (ref instanceof Map<?, ?>) {
+            JsonObject obj = new JsonObject();
+            obj.addAll((Map<String, JsonElement>) ref);
+            return (T) obj;
+        }
+
+        if (ref instanceof List<?>) {
+            return (T) new JsonArray((List<JsonElement>) ref);
+        }
+        if (ref instanceof JsonElement[]) {
+            return (T) new JsonArray(Arrays.asList((JsonElement[]) ref));
+        }
+
+        throw new IllegalArgumentException("Could not infer json element from reference.");
     }
 
     /**

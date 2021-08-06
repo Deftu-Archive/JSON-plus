@@ -90,6 +90,15 @@ public class JsonArray extends JsonElement implements Iterable<JsonElement> {
         return this;
     }
 
+    public JsonArray fill(JsonArray array) {
+        return fill(array.toArray());
+    }
+
+    public JsonArray fill(JsonElement... elements) {
+        for (JsonElement element : elements) add(element);
+        return this;
+    }
+
     public JsonArray set(int index, Object element) {
         elements.set(index, new JsonPrimitive(element));
         return this;
