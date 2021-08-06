@@ -12,8 +12,8 @@ class JsonObjectBuilder {
     private var values: Map<String, JsonElement> = mapOf()
     private var concurrent = false
 
-    fun values(lambda: () -> Map<String, JsonElement>) {
-        this.values = lambda()
+    fun values(vararg values: Pair<String, Any?>) {
+        this.values = mapOf(*(values.map { Pair(it.first, JsonElement.fromRef<JsonElement>(it.second)) }).toTypedArray())
     }
 
     fun concurrency(lambda: () -> Boolean) {

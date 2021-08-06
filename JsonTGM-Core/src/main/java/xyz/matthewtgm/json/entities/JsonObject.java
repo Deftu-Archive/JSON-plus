@@ -10,7 +10,7 @@ import java.util.function.Function;
 
 public class JsonObject extends JsonElement {
 
-    protected Map<String, JsonElement> members = new HashMap<>();
+    protected Map<String, JsonElement> members = new LinkedHashMap<>();
 
     public JsonObject(JsonObject parent) {
         if (parent == null || parent.members == null)

@@ -7,11 +7,11 @@ fun jsonArray(lambda: JsonArrayBuilder.() -> Unit): JsonArray =
 
 class JsonArrayBuilder {
 
-    private var values: Array<JsonElement> = arrayOf()
+    private var values: Array<Any?> = arrayOf()
     private var concurrent = false
 
-    fun values(lambda: () -> Array<JsonElement>) {
-        this.values = lambda()
+    fun values(vararg values: Any?) {
+        this.values = values.asList().toTypedArray()
     }
 
     fun concurrency(lambda: () -> Boolean) {
@@ -19,6 +19,6 @@ class JsonArrayBuilder {
     }
 
     fun build(): JsonArray =
-        (if (concurrent) CopyOnWriteJsonArray() else JsonArray()).fill(*values)
+        (if (concurrent) CopyOnWriteJsonArray() else JsonArray()).addAll(*values)
 
 }

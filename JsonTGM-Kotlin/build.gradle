@@ -1,14 +1,9 @@
 plugins {
-    id 'java'
     id 'org.jetbrains.kotlin.jvm'
-}
-
-repositories {
-    mavenCentral()
 }
 
 dependencies {
     implementation(project(':JsonTGM-Core'))
 
-    implementation('org.jetbrains.kotlin:kotlin-stdlib-jdk8')
+    api('org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.21')
 }

@@ -201,6 +201,9 @@ public abstract class JsonElement {
 
     @SuppressWarnings("unchecked")
     public static <T extends JsonElement> T fromRef(Object ref) {
+        if (ref instanceof JsonObject) return (T) ref;
+        if (ref instanceof JsonArray) return (T) ref;
+
         if (
                    ref instanceof Long
                 || ref instanceof Integer
@@ -226,6 +229,8 @@ public abstract class JsonElement {
         if (ref instanceof JsonElement[]) {
             return (T) new JsonArray(Arrays.asList((JsonElement[]) ref));
         }
+
+        if (ref == null) return null;
 
         throw new IllegalArgumentException("Could not infer json element from reference.");
     }
