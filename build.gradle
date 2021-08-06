@@ -1,17 +1,23 @@
 plugins {
     id 'java'
+    id 'java-library'
     id 'org.jetbrains.kotlin.jvm' version '1.5.21'
-    id 'com.github.johnrengelman.shadow' version '6.1.0'
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
 }
 
 group = 'xyz.matthewtgm.json'
-version = '2.10.0'
+version = '2.11.0'
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+
+    repositories {
+        mavenCentral()
+    }
+}
 
 sourceCompatibility = targetCompatibility = '1.8'
-
-repositories {
-    mavenCentral()
-}
 
 configurations {
     shade
@@ -26,6 +32,13 @@ dependencies {
     implementation(project(':JsonTGM-Utilities'))
 
     implementation(project(':JsonTGM-Kotlin'))
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
+}
+
+test {
+    useJUnitPlatform()
 }
 
 shadowJar {
