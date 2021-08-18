@@ -1,6 +1,3 @@
 plugins {
     id 'java'
 }
-
-group 'xyz.matthewtgm.json'
-version '2.2'
