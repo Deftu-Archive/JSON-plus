@@ -6,11 +6,12 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'JsonTGM'
-include 'JsonTGM-Core'
-include 'JsonTGM-Serialization'
-include 'JsonTGM-Files'
-include 'JsonTGM-Utilities'
-include 'JsonTGM-Kotlin'
-include 'JsonTGM-Kotlin'
+rootProject.name = 'JSON+'
 
+include(
+        'core',
+        'serialization',
+        'files',
+        'utilities',
+        'kotlin'
+)

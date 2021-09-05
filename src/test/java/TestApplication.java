@@ -1,7 +1,7 @@
-import xyz.matthewtgm.json.entities.CopyOnWriteJsonArray;
-import xyz.matthewtgm.json.entities.JsonArray;
-import xyz.matthewtgm.json.entities.JsonElement;
-import xyz.matthewtgm.json.entities.JsonPrimitive;
+import xyz.deftu.json.entities.CopyOnWriteJsonArray;
+import xyz.deftu.json.entities.JsonArray;
+import xyz.deftu.json.entities.JsonElement;
+import xyz.deftu.json.entities.JsonPrimitive;
 
 public class TestApplication {
 

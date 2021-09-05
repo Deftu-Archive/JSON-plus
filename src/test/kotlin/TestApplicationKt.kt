@@ -1,10 +1,14 @@
-import xyz.matthewtgm.json.kotlin.*
+import xyz.deftu.json.kotlin.jsonArray
+import xyz.deftu.json.kotlin.jsonObject
 
 fun main() {
-    val concurrentJsonObject = jsonObject(
-        "name" to "gamer",
-        "gaming" to "name"
-    )
-    println(concurrentJsonObject)
-    println("name".toJsonPrimitive())
+    println(jsonArray {
+        values("Hello,", "world!")
+        concurrency(true)
+    })
+
+    println(jsonObject {
+        values("Hello," to "world!")
+        concurrent = true
+    })
 }

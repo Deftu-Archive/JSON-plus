@@ -4,8 +4,8 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
-group = 'xyz.matthewtgm.json'
-version = '2.10.0'
+group = 'xyz.deftu.json'
+version = '2.11.0'
 
 sourceCompatibility = targetCompatibility = '1.8'
 
@@ -20,12 +20,12 @@ configurations {
 }
 
 dependencies {
-    implementation(project(':JsonTGM-Core'))
-    implementation(project(':JsonTGM-Files'))
-    implementation(project(':JsonTGM-Serialization'))
-    implementation(project(':JsonTGM-Utilities'))
+    implementation(project(':core'))
+    implementation(project(':files'))
+    implementation(project(':serialization'))
+    implementation(project(':utilities'))
 
-    implementation(project(':JsonTGM-Kotlin'))
+    implementation(project(':kotlin'))
 }
 
 shadowJar {
