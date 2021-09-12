@@ -2,7 +2,7 @@ package xyz.queffe.json;
 
 public class JsonVersion {
 
-    public static final JsonVersion CURRENT = new JsonVersion(2, 10, 0);
+    public static final JsonVersion CURRENT = new JsonVersion(2, 12, 0);
 
     public final int major;
     public final int minor;
