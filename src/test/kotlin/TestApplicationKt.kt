@@ -1,5 +1,5 @@
-import xyz.queffe.json.kotlin.jsonArray
-import xyz.queffe.json.kotlin.jsonObject
+import xyz.qalcyo.json.kotlin.jsonArray
+import xyz.qalcyo.json.kotlin.jsonObject
 
 fun main() {
     println(jsonArray {

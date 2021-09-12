@@ -1,7 +1,7 @@
-import xyz.queffe.json.entities.CopyOnWriteJsonArray;
-import xyz.queffe.json.entities.JsonArray;
-import xyz.queffe.json.entities.JsonElement;
-import xyz.queffe.json.entities.JsonPrimitive;
+import xyz.qalcyo.json.entities.CopyOnWriteJsonArray;
+import xyz.qalcyo.json.entities.JsonArray;
+import xyz.qalcyo.json.entities.JsonElement;
+import xyz.qalcyo.json.entities.JsonPrimitive;
 
 public class TestApplication {
 

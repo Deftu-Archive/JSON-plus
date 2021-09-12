@@ -8,4 +8,4 @@
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
 
 ## About
-JSON+ is a JSON library used with the Java Virtual Machine.
+JSON+ is a JSON library to be used with the Java Virtual Machine.
