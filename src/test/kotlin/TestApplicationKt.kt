@@ -1,5 +1,5 @@
-import xyz.deftu.json.kotlin.jsonArray
-import xyz.deftu.json.kotlin.jsonObject
+import xyz.queffe.json.kotlin.jsonArray
+import xyz.queffe.json.kotlin.jsonObject
 
 fun main() {
     println(jsonArray {

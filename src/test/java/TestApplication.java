@@ -1,7 +1,7 @@
-import xyz.deftu.json.entities.CopyOnWriteJsonArray;
-import xyz.deftu.json.entities.JsonArray;
-import xyz.deftu.json.entities.JsonElement;
-import xyz.deftu.json.entities.JsonPrimitive;
+import xyz.queffe.json.entities.CopyOnWriteJsonArray;
+import xyz.queffe.json.entities.JsonArray;
+import xyz.queffe.json.entities.JsonElement;
+import xyz.queffe.json.entities.JsonPrimitive;
 
 public class TestApplication {
 
